@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Modelo;
+package modelo;
 
 /**
  *
@@ -13,33 +13,18 @@ public class Venta {
     private double valor;
     private EnumMes mes;
 
-    public Venta() {
-    }
-
-    public Venta(Integer id, double valor, EnumMes mes) {
-        this.id = id;
-        this.valor = valor;
-        this.mes = mes;
-    }
-
-    @Override
-    public String toString() {
-        return getMes().toString()+" "+getValor();
-    }
-    
-    
     /**
      * @return the id
      */
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(int id) {
+        this.setId((Integer) id);
     }
 
     /**
@@ -69,6 +54,17 @@ public class Venta {
     public void setMes(EnumMes mes) {
         this.mes = mes;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return getMes().toString()+" "+getValor();
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Integer id) {
+        this.id = id;
+    }
+   
 }
