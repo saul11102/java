@@ -13,7 +13,6 @@ import Controlador.ed.lista.ListaEnlazada;
  * @author alejandro
  */
 public class Sucursal {
-
     private Integer id;
     private String nombre;
     private ListaEnlazada<Venta> listaVenta;
@@ -81,7 +80,7 @@ public class Sucursal {
      * @param venta objeto de la clase Venta
      */
     public void setVenta(Venta venta) {
-        listaVenta.insertar(venta);
+        listaVenta.insertarNodo(venta);
     }
 
     public Venta getVenta(int posicion) {
@@ -92,4 +91,6 @@ public class Sucursal {
             return null;
         }
     }
+    
+    
 }

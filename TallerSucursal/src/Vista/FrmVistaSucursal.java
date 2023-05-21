@@ -4,12 +4,18 @@
  */
 package Vista;
 
+import Controlador.DAO.AdaptadorDAO;
+import Controlador.Util.Utilidades;
+import Controlador.ed.Pila.Exception.TopeException;
 import Controlador.ed.lista.ListaEnlazada;
 import Modelo.Sucursal;
 import Vista.Modelo.Tabla.ModeloTablaSucursal;
 import javax.swing.JOptionPane;
 import Controlador.ed.lista.Exception.PosicionException;
 import Controlador.ed.lista.Exception.VacioException;
+import Controlador.ed.lista.NodoLista;
+import Modelo.Venta;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,9 +25,12 @@ import java.util.logging.Logger;
  */
 public class FrmVistaSucursal extends javax.swing.JDialog {
 
+    private AdaptadorDAO<Sucursal> dao = new AdaptadorDAO<>(Sucursal.class);
+    private ListaEnlazada<Venta> listaVentas = new ListaEnlazada<>();
     private ListaEnlazada<Sucursal> listaSucursales = new ListaEnlazada<>();
     private ModeloTablaSucursal modelo = new ModeloTablaSucursal();
     private int id = 0;
+    private int fila = -1;
 
     /**
      * Creates new form FrmVistaSucursal
@@ -29,18 +38,14 @@ public class FrmVistaSucursal extends javax.swing.JDialog {
     public FrmVistaSucursal(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        sucursalVentaMayor(dao.listar());
         cargarTabla();
     }
 
     private void cargarTabla() {
-        modelo.setListaSucursal(listaSucursales);
+        modelo.setListaSucursal(dao.listar());
         tablaSucursales.setModel(modelo);
         tablaSucursales.updateUI();
-    }
-
-    private void limpiar() {
-        txtNombre.setText("");
-        cargarTabla();
     }
 
     /**
@@ -62,6 +67,12 @@ public class FrmVistaSucursal extends javax.swing.JDialog {
         jPanel3 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        lblSucursalMayor = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        btnPeticiones = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -99,7 +110,7 @@ public class FrmVistaSucursal extends javax.swing.JDialog {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Guardar una sucursal"));
 
-        jLabel1.setText("Nombre de la Sucursal:");
+        jLabel1.setText("Nombre:");
 
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -112,14 +123,14 @@ public class FrmVistaSucursal extends javax.swing.JDialog {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addComponent(txtNombre)
+                .addGap(18, 18, 18)
                 .addComponent(btnGuardar)
-                .addGap(16, 16, 16))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -150,9 +161,9 @@ public class FrmVistaSucursal extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel2)
-                .addGap(40, 40, 40)
+                .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,6 +175,67 @@ public class FrmVistaSucursal extends javax.swing.JDialog {
                 .addContainerGap(52, Short.MAX_VALUE))
         );
 
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Sucursal con mayor ventas"));
+
+        jLabel3.setText("Nombre: ");
+
+        lblSucursalMayor.setText("<<Nombre>>");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblSucursalMayor, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(lblSucursalMayor))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Peticiones"));
+
+        jLabel4.setText("Haga click para ingresar una petición");
+
+        btnPeticiones.setText("Peticiones");
+        btnPeticiones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPeticionesActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addComponent(btnPeticiones)
+                        .addGap(66, 66, 66)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4)
+                .addGap(18, 18, 18)
+                .addComponent(btnPeticiones)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -172,8 +244,14 @@ public class FrmVistaSucursal extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 266, Short.MAX_VALUE)
+                            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -182,46 +260,85 @@ public class FrmVistaSucursal extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void sucursalVentaMayor(ListaEnlazada<Sucursal> listaSucursales1) {
+        NodoLista<Sucursal> nodo = listaSucursales1.getCabecera();
+        String nombre = "";
+        Double promedio = 0.0;
+        while (nodo != null) {
+            Sucursal s = nodo.getInfo();
+            if (Utilidades.mediaVentas(s) > promedio) {
+                promedio = Utilidades.mediaVentas(s);
+                nombre = s.getNombre();
+            }
+            nodo = nodo.getSig();
+        }
+
+        lblSucursalMayor.setText(nombre);
+    }
+
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        if (!txtNombre.getText().trim().isEmpty()) {
-            Sucursal nuevaSucursal = new Sucursal();
-            nuevaSucursal.setNombre(txtNombre.getText());
-            nuevaSucursal.setId(id);
-            id++;
-            listaSucursales.insertar(nuevaSucursal);
-            cargarTabla();
-            JOptionPane.showMessageDialog(null, "Se ha guardado correctamente", "OK", JOptionPane.INFORMATION_MESSAGE);
-        } else
-            JOptionPane.showMessageDialog(null, "Llene todo los campos", "Error", JOptionPane.ERROR_MESSAGE);
+        try {
+            guardarSucursal();
+        } catch (IOException ex) {
+            Logger.getLogger(FrmVistaSucursal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            int fila = tablaSucursales.getSelectedRow();
+            this.fila = tablaSucursales.getSelectedRow();
             if (fila >= 0) {
                 if (modelo.getListaSucursal().get(fila) != null) {
-                    Sucursal sucursal = listaSucursales.get(fila);
-                    new FrmVistaVentas(null, true, sucursal).setVisible(true);
+                    Sucursal sucursal = modelo.getListaSucursal().get(fila);
                     tablaSucursales.clearSelection();
+                    new FrmVistaVentas(null, true, sucursal).setVisible(true);
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Ingrese un nombre a la sucursal", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Seleccione una sucursal de la tabla", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } catch (VacioException | PosicionException e) {
             System.err.println(e.getMessage());
-            JOptionPane.showMessageDialog(null, "Seleccione una sucursal de la tabla", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Lista Vacia");
         }
-
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnPeticionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPeticionesActionPerformed
+
+        new FrmVistaPeticiones(null, true).setVisible(true);
+
+    }//GEN-LAST:event_btnPeticionesActionPerformed
+
+    /**
+     * método para guardar una sucursal dentro de la lista enlazada y dentro de
+     * la base de datos
+     */
+    public void guardarSucursal() throws IOException {
+        if (!txtNombre.getText().trim().isEmpty()) {
+            Sucursal s = new Sucursal();
+            s.setNombre(txtNombre.getText());
+            s.setId(id);
+            this.listaSucursales.insertarNodo(s);
+            dao.guardar(s);
+            id++;
+            cargarTabla();
+            JOptionPane.showMessageDialog(null, "Sucursal guardada", "OK", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Llene todo los campos", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -275,13 +392,19 @@ public class FrmVistaSucursal extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JToggleButton btnPeticiones;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblSucursalMayor;
     private javax.swing.JTable tablaSucursales;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables

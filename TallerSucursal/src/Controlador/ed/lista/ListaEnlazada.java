@@ -14,9 +14,9 @@ import Controlador.ed.lista.Exception.VacioException;
 public class ListaEnlazada<E> {
     private NodoLista<E> cabecera;
     private Integer size = 0;
-
+    
     /**
-     * @return the cabecera
+     * @return the cabecera;
      */
     public NodoLista<E> getCabecera() {
         return cabecera;
@@ -51,7 +51,7 @@ public class ListaEnlazada<E> {
      *
      * @param info objeto de la clase NodoLista
      */
-    public void insertar(E info) {
+    public void insertarNodo(E info) {
         NodoLista<E> nuevo = new NodoLista<>(info, null);
         if (isEmpty()) {
             this.cabecera = nuevo;
@@ -73,7 +73,7 @@ public class ListaEnlazada<E> {
      */
     public void insertarInicio(E info) {
         if (isEmpty()) {
-            insertar(info);
+            insertarNodo(info);
         } else {
             NodoLista<E> nuevo = new NodoLista<>(info, null);
             nuevo.setSig(cabecera);
@@ -92,7 +92,7 @@ public class ListaEnlazada<E> {
      */
     public void insertarPosicion(E info, Integer pos) throws PosicionException {
         if (isEmpty()) {
-            insertar(info);
+            insertarInicio(info);
         } else if (pos == 0) {
             insertarInicio(info);
         } else if (pos > 0 && pos < size()) {
@@ -120,36 +120,32 @@ public class ListaEnlazada<E> {
      * @throws VacioException retorna la información borrada
      */
     public E delete(Integer pos) throws PosicionException, VacioException {
-        if (isEmpty()) {
-            throw new VacioException();
-        } else {
-            E dato = null;
-            if (pos >= 0 && pos < size()) {
-                if (pos == 0) {
-                    dato = cabecera.getInfo();
-                    cabecera = cabecera.getSig();
-                    size--;
-                } else {
-                    NodoLista<E> aux = cabecera;
-                    for (int i = 0; i < (pos - 1); i++) {
-                        aux = aux.getSig();
-                    }
-                    //if (pos + 1 == size) {
-                    NodoLista<E> aux1 = aux.getSig();
-                    dato = aux1.getInfo();
-                    //} else {
-                    //dato = aux.getInfo();
-                    //}
-                    NodoLista<E> proximo = aux.getSig();
-                    aux.setSig(proximo.getSig());
-                    size--;
-                }
+    if (isEmpty()) {
+        throw new VacioException();
+    } else {
+        E dato = null;
+        if (pos >= 0 && pos < size()) {
+            if (pos == 0) {
+                dato = cabecera.getInfo();
+                cabecera = cabecera.getSig();
+                size--;
             } else {
-                throw new PosicionException();
+                NodoLista<E> aux = cabecera;
+                for (int i = 0; i < (pos - 1); i++) {
+                    aux = aux.getSig();
+                }
+                NodoLista<E> nodoEliminar = aux.getSig();
+                dato = nodoEliminar.getInfo();
+                aux.setSig(nodoEliminar.getSig());
+                size--;
             }
-            return dato;
+        } else {
+            throw new PosicionException();
         }
-    }
+        return dato;
+        }
+}
+    
 
     /**
      * método que obtiene la información del nodo especificando el índice
@@ -169,15 +165,29 @@ public class ListaEnlazada<E> {
                     dato = cabecera.getInfo();
                 } else {
                     NodoLista<E> aux = cabecera;
-                    for (int i = 0; i < (pos - 1); i++) {
+                    for (int i = 0; i < (pos); i++) {
                         aux = aux.getSig();
                     }
                     dato = aux.getInfo();
                 }
             } else {
-                throw new VacioException();
+                throw new PosicionException();
             }
             return dato;
+        }
+    }
+    
+    public void modificar(E info, Integer pos) throws PosicionException {
+        NodoLista<E> aux = cabecera;
+        int indice = 0;
+
+        while (aux != null) {
+            if (indice == pos) {
+                aux.setInfo(info);
+                break;
+            }
+            aux = aux.getSig();
+            indice++;
         }
     }
 

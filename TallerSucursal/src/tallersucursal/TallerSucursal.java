@@ -4,6 +4,10 @@
  */
 package tallersucursal;
 
+import Controlador.ed.Cola.Cola;
+import Controlador.ed.Pila.Exception.TopeException;
+import Controlador.ed.Pila.Pila;
+import Controlador.ed.lista.Exception.PosicionException;
 import Controlador.ed.lista.Exception.VacioException;
 import Controlador.ed.lista.ListaEnlazada;
 import Modelo.EnumMes;
@@ -19,34 +23,33 @@ public class TallerSucursal {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws VacioException {
+    public static void main(String[] args)throws VacioException, TopeException, PosicionException {
+        Pila<Integer> pila = new Pila<>(5);
+        Cola<Integer> cola = new Cola<>(5);
         try {
-            ListaEnlazada<Sucursal> listaSucursal = new ListaEnlazada<>();
-
-            ListaEnlazada<Venta> listaVentas1 = new ListaEnlazada<>();
-            Venta sucursal1venta1 = new Venta(1, 23.5, EnumMes.ENERO);
-            Venta sucursal1venta2 = new Venta(2, 32.55, EnumMes.FEBRERO);
-            listaVentas1.insertar(sucursal1venta1);
-            listaVentas1.insertar(sucursal1venta2);
-
-            Sucursal sucursal1 = new Sucursal(1, "Micromercado", listaVentas1);
-
-            ListaEnlazada<Venta> listaVentas2 = new ListaEnlazada<>();
-            Venta sucursal2venta1 = new Venta(1, 324.2, EnumMes.ENERO);
-            Venta sucursal2venta2 = new Venta(2, 543.4, EnumMes.FEBRERO);
-            listaVentas2.insertar(sucursal2venta1);
-            listaVentas2.insertar(sucursal2venta2);
-
-            Sucursal sucursal2 = new Sucursal(2, "Supermercado", listaVentas2);
-
-            listaSucursal.insertar(sucursal1);
-            listaSucursal.insertar(sucursal2);
-
-            listaSucursal.imprimir();
+            pila.push(5);
+            pila.push(56);
+            pila.push(23);
+            pila.push(123);
+            pila.push(43);
+            pila.print();
+            pila.pop();
+            pila.print();
+            
+            System.err.println("FILA --------------------------");
+            
+            cola.queue(5);
+            cola.queue(56);
+            cola.queue(23);
+            cola.queue(123);
+            cola.queue(43);
+            cola.print();
+            cola.dequeue();
+            cola.print();
+            
         } catch (VacioException e) {
             System.err.println(e.getMessage());
         }
-
     }
 
 }

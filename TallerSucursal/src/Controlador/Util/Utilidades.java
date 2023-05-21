@@ -4,6 +4,8 @@
  */
 package Controlador.Util;
 
+import Controlador.ed.lista.Exception.PosicionException;
+import Controlador.ed.lista.Exception.VacioException;
 import Controlador.ed.lista.ListaEnlazada;
 import Controlador.ed.lista.NodoLista;
 import Modelo.Sucursal;
@@ -47,5 +49,50 @@ public class Utilidades {
         } else {
             return suma / listaVentas.size();
         }
+    }
+    
+    /**
+     * Método para obtener el valor de la venta mayor entre todos los meses
+     * @param s
+     * @return returna el valor de la venta mayor
+     * @throws PosicionException
+     * @throws VacioException 
+     */
+    public static Double obtenerMayorVenta(Sucursal s)throws PosicionException, VacioException{
+        ListaEnlazada<Venta> listaVentas = s.getListaVenta();
+        NodoLista<Venta> nodo = listaVentas.getCabecera();
+        Double ventas = 0.0;
+        while (nodo != null){
+            Venta v = nodo.getInfo();
+            if(v.getValor() > ventas)
+                ventas = v.getValor();
+            nodo = nodo.getSig();
+        }
+        return ventas;
+    }
+    
+    /**
+     * Método para calcular el mes con menor ventas de todos
+     * @param s
+     * @return el mes que se obtuvieron menos ventas
+     * @throws PosicionException
+     * @throws VacioException 
+     */
+    public static String calcularMenorVenta(Sucursal s)throws PosicionException, VacioException{
+        ListaEnlazada<Venta> listaVentas = s.getListaVenta();
+        Double ventas = obtenerMayorVenta(s);
+        NodoLista<Venta> nodo = listaVentas.getCabecera();
+        String ventaMenor = "";
+        
+        while (nodo != null){
+            Venta v = nodo.getInfo();
+            if (ventas > v.getValor()){
+                ventas = v.getValor();
+                ventaMenor = v.getMes().name();
+            }
+            nodo = nodo.getSig();
+        }
+        
+        return ventaMenor;
     }
 }

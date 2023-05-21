@@ -1,0 +1,22 @@
+{
+    "Controlador.ed.Cola.Cola": {
+        "cola": {
+            "cabecera": {
+                "info": {
+                    "@class": "Modelo.Reclamo",
+                    "reclamo": 12,
+                    "fecha": "2023-05-21 20:46:09.956 UTC"
+                },
+                "sig": {
+                    "info": {
+                        "@class": "Modelo.Reclamo",
+                        "reclamo": 13,
+                        "fecha": "2023-05-21 20:46:15.224 UTC"
+                    }
+                }
+            },
+            "size": 2,
+            "tope": 10
+        }
+    }
+}

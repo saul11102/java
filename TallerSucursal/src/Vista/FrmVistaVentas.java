@@ -4,13 +4,20 @@
  */
 package Vista;
 
+import Controlador.DAO.AdaptadorDAO;
+import Controlador.DAO.AdaptadorDAOHistorial;
+import Controlador.ed.Pila.Exception.TopeException;
+import Controlador.ed.Pila.Pila;
 import Controlador.ed.lista.Exception.PosicionException;
 import Controlador.ed.lista.Exception.VacioException;
 import Controlador.ed.lista.ListaEnlazada;
 import Modelo.EnumMes;
+import Modelo.Historial;
 import Modelo.Sucursal;
 import Modelo.Venta;
 import Vista.Modelo.Tabla.ModeloTablaVentas;
+import java.io.IOException;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -20,24 +27,30 @@ import javax.swing.JOptionPane;
  * @author alejandro
  */
 public class FrmVistaVentas extends javax.swing.JDialog {
-
+    private AdaptadorDAOHistorial<Historial> daoHistorial = new AdaptadorDAOHistorial<>(Historial.class);
+    private AdaptadorDAO<Sucursal> dao = new AdaptadorDAO<>(Sucursal.class);
     private ModeloTablaVentas modelo = new ModeloTablaVentas();
     private ListaEnlazada<Venta> listaVentas = new ListaEnlazada<>();
     private Sucursal sucursal;
     private Venta venta;
-    private int fila = 0;
+    private Historial historial = new Historial();
+    private Pila<Historial> pilaHistorial = new Pila<>(20);
+    private int fila = -1;
+    private int id = 0;
 
     /**
      * Creates new form FrmVistaVentas
      */
-    public FrmVistaVentas(java.awt.Frame parent, boolean modal, Sucursal sucursal1) {
+    public FrmVistaVentas(java.awt.Frame parent, boolean modal, Sucursal auxSucursal) {
         super(parent, modal);
         initComponents();
-        this.sucursal = sucursal1;
+        this.sucursal = auxSucursal;
+        this.listaVentas = sucursal.getListaVenta();
         labelNombre.setText(sucursal.getNombre());
         inicializarVentas();
         cargarTabla();
     }
+
     /**
      * Método para cargar los componentes de la tabla
      */
@@ -46,11 +59,11 @@ public class FrmVistaVentas extends javax.swing.JDialog {
         tblVentas.setModel(modelo);
         tblVentas.updateUI();
     }
-    
+
     /**
      * método para limpiar el contenido de la tabla
      */
-    public void limpiar(){
+    public void limpiar() {
         txtValor.setText("");
         lblMes.setText("");
         cargarTabla();
@@ -61,50 +74,78 @@ public class FrmVistaVentas extends javax.swing.JDialog {
      */
     private void inicializarVentas() {
         if (listaVentas.isEmpty()) {
+            this.listaVentas = new ListaEnlazada<>();
             for (EnumMes mes : EnumMes.values()) {
-                venta = new Venta();
-                venta.setMes(mes);
-                venta.setValor(0.0);
-                listaVentas.insertar(venta);
+                this.venta = new Venta();
+                this.venta.setMes(mes);
+                this.venta.setValor(0.0);
+                this.venta.setId(id);
+                id++;
+                listaVentas.insertarNodo(venta);
             }
         }
     }
 
-    public void cargarVenta() throws VacioException, PosicionException{
+    /**
+     * Método para cargar la venta
+     *
+     * @throws VacioException
+     * @throws PosicionException
+     */
+    public void cargarVenta() throws VacioException, PosicionException {
         fila = tblVentas.getSelectedRow();
         try {
-            if (fila >= 0) {    
-            sucursal.setVenta(listaVentas.get(fila));
-            txtValor.setText(String.valueOf(venta.getValor()));
-            Venta s = listaVentas.get(fila);
-            lblMes.setText(s.getMes().toString());
-        }
+            if (fila >= 0) {
+                this.venta = modelo.getListaVentas().get(fila);
+                txtValor.setText(String.valueOf(venta.getValor()));
+                lblMes.setText(venta.getMes().toString());
+            }
         } catch (VacioException | PosicionException e) {
-            JOptionPane.showMessageDialog(null, "Seleccione una venta de la tabla", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Tabla vacia", "Error", JOptionPane.ERROR_MESSAGE);
             System.err.println(e.getMessage());
         }
     }
-    
+
     /**
      * método quee me permite guardar en la lista una venta
      */
-    public void modificar(){
-        if(!txtValor.getText().trim().isEmpty() && !lblMes.getText().isEmpty()){
+    public void modificar() throws VacioException, PosicionException, IOException, TopeException {
+        if (!txtValor.getText().trim().isEmpty() && !lblMes.getText().isEmpty()) {
             try {
-                Venta s = listaVentas.get(fila);
-                venta = new Venta(sucursal.getId(), Double.parseDouble(txtValor.getText()), s.getMes());
-                listaVentas.insertarPosicion(venta, fila-1);
-                listaVentas.delete(fila);
-                sucursal.setListaVenta(listaVentas);
+                Venta v = new Venta();
+                this.venta.setValor(Double.parseDouble(txtValor.getText()));
+                this.modelo.getListaVentas().modificar(venta, venta.getId());
+                this.sucursal.setListaVenta(modelo.getListaVentas());
+                dao.modificar(sucursal, sucursal.getId());
+                agregarHistorial(venta);
+                modelo.getListaVentas().imprimir();
                 limpiar();
-                listaVentas.imprimir();
                 JOptionPane.showMessageDialog(null, "Se ha actualizado");
-            } catch (Exception e) {
+            } catch (VacioException | PosicionException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage());
             }
-        }
-        else
+        } else {
             JOptionPane.showMessageDialog(null, "Llene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /**
+     * método para guardar un historial dentro de la cola
+     *
+     * @param v
+     * @throws VacioException
+     * @throws TopeException
+     * @throws PosicionException
+     */
+    public void agregarHistorial(Venta v) throws VacioException, TopeException, PosicionException, IOException {
+        Historial nuevoHistorial = new Historial();
+        nuevoHistorial.setVenta(v);
+        nuevoHistorial.setFecha(new Date());
+
+        if (daoHistorial.listar().getPilaI().isFull()) {
+            daoHistorial.eliminarPrimero();
+        }
+        daoHistorial.push(nuevoHistorial);
     }
 
     /**
@@ -128,6 +169,10 @@ public class FrmVistaVentas extends javax.swing.JDialog {
         jLabel4 = new javax.swing.JLabel();
         txtValor = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jToggleButton1 = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -159,7 +204,7 @@ public class FrmVistaVentas extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(labelNombre)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 745, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -236,6 +281,47 @@ public class FrmVistaVentas extends javax.swing.JDialog {
                 .addContainerGap(48, Short.MAX_VALUE))
         );
 
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Historial"));
+
+        jLabel3.setText("Revisar últimos cambios ");
+
+        jToggleButton1.setText("Historial");
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addGap(41, 41, 41))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel3))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addComponent(jToggleButton1)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addGap(41, 41, 41)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jToggleButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -244,7 +330,10 @@ public class FrmVistaVentas extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -253,7 +342,9 @@ public class FrmVistaVentas extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -261,16 +352,29 @@ public class FrmVistaVentas extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarActionPerformed
+        fila = tblVentas.getSelectedRow();
         try {
             cargarVenta();
         } catch (VacioException | PosicionException ex) {
             System.err.println(ex.getMessage());
-        } 
+        }
     }//GEN-LAST:event_btnSeleccionarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        modificar();
+        try {
+            modificar();
+        } catch (VacioException | PosicionException | IOException | TopeException ex) {
+            Logger.getLogger(FrmVistaVentas.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        try {
+            new FrmVistaHistorial(null, true).setVisible(true);
+        } catch (VacioException | PosicionException ex) {
+            Logger.getLogger(FrmVistaVentas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -319,10 +423,14 @@ public class FrmVistaVentas extends javax.swing.JDialog {
     private javax.swing.JButton btnSeleccionar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JLabel labelNombre;
     private javax.swing.JLabel lblMes;
     private javax.swing.JTable tblVentas;
