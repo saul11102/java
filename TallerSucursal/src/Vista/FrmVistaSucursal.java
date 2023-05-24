@@ -6,7 +6,6 @@ package Vista;
 
 import Controlador.DAO.AdaptadorDAO;
 import Controlador.Util.Utilidades;
-import Controlador.ed.Pila.Exception.TopeException;
 import Controlador.ed.lista.ListaEnlazada;
 import Modelo.Sucursal;
 import Vista.Modelo.Tabla.ModeloTablaSucursal;
@@ -14,6 +13,7 @@ import javax.swing.JOptionPane;
 import Controlador.ed.lista.Exception.PosicionException;
 import Controlador.ed.lista.Exception.VacioException;
 import Controlador.ed.lista.NodoLista;
+import Modelo.EnumMes;
 import Modelo.Venta;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -24,11 +24,10 @@ import java.util.logging.Logger;
  * @author alejandro
  */
 public class FrmVistaSucursal extends javax.swing.JDialog {
-
     private AdaptadorDAO<Sucursal> dao = new AdaptadorDAO<>(Sucursal.class);
     private ListaEnlazada<Venta> listaVentas = new ListaEnlazada<>();
-    private ListaEnlazada<Sucursal> listaSucursales = new ListaEnlazada<>();
     private ModeloTablaSucursal modelo = new ModeloTablaSucursal();
+    private Venta venta = new Venta();
     private int id = 0;
     private int fila = -1;
 
@@ -39,6 +38,7 @@ public class FrmVistaSucursal extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         sucursalVentaMayor(dao.listar());
+        inicializarVentas();
         cargarTabla();
     }
 
@@ -46,6 +46,24 @@ public class FrmVistaSucursal extends javax.swing.JDialog {
         modelo.setListaSucursal(dao.listar());
         tablaSucursales.setModel(modelo);
         tablaSucursales.updateUI();
+    }
+    
+    /**
+     * método que inicializa la lista de ventas
+     */
+    private void inicializarVentas() {
+        int idVenta = 0;
+        if (listaVentas.isEmpty()) {
+            this.listaVentas = new ListaEnlazada<>();
+            for (EnumMes mes : EnumMes.values()) {
+                this.venta = new Venta();
+                this.venta.setMes(mes);
+                this.venta.setValor(0.0);
+                this.venta.setId(idVenta);
+                idVenta++;
+                listaVentas.insertarNodo(venta);
+            }
+        }
     }
 
     /**
@@ -233,7 +251,7 @@ public class FrmVistaSucursal extends javax.swing.JDialog {
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
                 .addComponent(btnPeticiones)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -264,10 +282,13 @@ public class FrmVistaSucursal extends javax.swing.JDialog {
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
         pack();
@@ -305,6 +326,7 @@ public class FrmVistaSucursal extends javax.swing.JDialog {
                     Sucursal sucursal = modelo.getListaSucursal().get(fila);
                     tablaSucursales.clearSelection();
                     new FrmVistaVentas(null, true, sucursal).setVisible(true);
+                    cargarTabla();
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Seleccione una sucursal de la tabla", "Error", JOptionPane.ERROR_MESSAGE);
@@ -330,7 +352,7 @@ public class FrmVistaSucursal extends javax.swing.JDialog {
             Sucursal s = new Sucursal();
             s.setNombre(txtNombre.getText());
             s.setId(id);
-            this.listaSucursales.insertarNodo(s);
+            s.setListaVenta(listaVentas);
             dao.guardar(s);
             id++;
             cargarTabla();

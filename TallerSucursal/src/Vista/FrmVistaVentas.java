@@ -47,7 +47,6 @@ public class FrmVistaVentas extends javax.swing.JDialog {
         this.sucursal = auxSucursal;
         this.listaVentas = sucursal.getListaVenta();
         labelNombre.setText(sucursal.getNombre());
-        inicializarVentas();
         cargarTabla();
     }
 
@@ -69,22 +68,7 @@ public class FrmVistaVentas extends javax.swing.JDialog {
         cargarTabla();
     }
 
-    /**
-     * método que inicializa la lista de ventas
-     */
-    private void inicializarVentas() {
-        if (listaVentas.isEmpty()) {
-            this.listaVentas = new ListaEnlazada<>();
-            for (EnumMes mes : EnumMes.values()) {
-                this.venta = new Venta();
-                this.venta.setMes(mes);
-                this.venta.setValor(0.0);
-                this.venta.setId(id);
-                id++;
-                listaVentas.insertarNodo(venta);
-            }
-        }
-    }
+    
 
     /**
      * Método para cargar la venta
@@ -96,7 +80,7 @@ public class FrmVistaVentas extends javax.swing.JDialog {
         fila = tblVentas.getSelectedRow();
         try {
             if (fila >= 0) {
-                this.venta = modelo.getListaVentas().get(fila);
+                this.venta = sucursal.getListaVenta().get(fila);
                 txtValor.setText(String.valueOf(venta.getValor()));
                 lblMes.setText(venta.getMes().toString());
             }
@@ -112,12 +96,17 @@ public class FrmVistaVentas extends javax.swing.JDialog {
     public void modificar() throws VacioException, PosicionException, IOException, TopeException {
         if (!txtValor.getText().trim().isEmpty() && !lblMes.getText().isEmpty()) {
             try {
-                Venta v = new Venta();
-                this.venta.setValor(Double.parseDouble(txtValor.getText()));
-                this.modelo.getListaVentas().modificar(venta, venta.getId());
-                this.sucursal.setListaVenta(modelo.getListaVentas());
+                Venta nuevaVenta = new Venta();
+                
+                nuevaVenta.setValor(Double.parseDouble(txtValor.getText().toString()));
+                nuevaVenta.setId(venta.getId());
+                nuevaVenta.setMes(venta.getMes());
+                
+                sucursal.getListaVenta().modificar(nuevaVenta, venta.getId());
+                
                 dao.modificar(sucursal, sucursal.getId());
-                agregarHistorial(venta);
+                
+                agregarHistorial(nuevaVenta);
                 modelo.getListaVentas().imprimir();
                 limpiar();
                 JOptionPane.showMessageDialog(null, "Se ha actualizado");
@@ -145,6 +134,7 @@ public class FrmVistaVentas extends javax.swing.JDialog {
         if (daoHistorial.listar().getPilaI().isFull()) {
             daoHistorial.eliminarPrimero();
         }
+        
         daoHistorial.push(nuevoHistorial);
     }
 
@@ -361,6 +351,7 @@ public class FrmVistaVentas extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSeleccionarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        
         try {
             modificar();
         } catch (VacioException | PosicionException | IOException | TopeException ex) {

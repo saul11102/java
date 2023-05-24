@@ -98,23 +98,23 @@ public class FrmVistaPeticiones extends javax.swing.JDialog {
 
         if (texto.isEmpty()) {
             JOptionPane.showMessageDialog(null, "La petición está vacía. Por favor, ingrese una petición válida.");
-            return;
+        } else {
+            try {
+                if (!colaReclamo.getCola().isFull()) {
+                    nuevoReclamo.setReclamo(texto);
+                    nuevoReclamo.setFecha(new Date());
+                    dao.queue(nuevoReclamo);
+                    JOptionPane.showMessageDialog(null, "Petición guardada correctamente");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Lista de peticiones llenas, intente más tarde");
+                    actualizarReclamos();
+                }
+            } catch (TopeException | IOException | VacioException | PosicionException e) {
+                JOptionPane.showMessageDialog(null, "Error al guardar la petición");
+                System.err.println(e.getMessage());
+            }
         }
 
-        try {
-            if (!colaReclamo.getCola().isFull()) {
-                nuevoReclamo.setReclamo(texto);
-                nuevoReclamo.setFecha(new Date());
-                dao.queue(nuevoReclamo);
-                JOptionPane.showMessageDialog(null, "Petición guardada correctamente");
-            } else {
-                JOptionPane.showMessageDialog(null, "Lista de peticiones llenas, intente más tarde");
-                actualizarReclamos();
-            }
-        } catch (TopeException | IOException | VacioException | PosicionException e) {
-            JOptionPane.showMessageDialog(null, "Error al guardar la petición");
-            System.err.println(e.getMessage());
-        }
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     /**

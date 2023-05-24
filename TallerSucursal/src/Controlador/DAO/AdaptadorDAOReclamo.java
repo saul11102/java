@@ -26,7 +26,7 @@ public class AdaptadorDAOReclamo<E> implements InterfazDAOCola<E> {
     private Conexion conexion;
     private Class clazz;
     private String url;
-    private long horaBorraReclamos = 3600;
+    private long horaBorraReclamos = 36000;
 
     public AdaptadorDAOReclamo(Class clazz) {
         this.conexion = new Conexion();

@@ -4,14 +4,14 @@
             "cabecera": {
                 "info": {
                     "@class": "Modelo.Reclamo",
-                    "reclamo": 12,
-                    "fecha": "2023-05-21 20:46:09.956 UTC"
+                    "reclamo": "peticion 1",
+                    "fecha": "2023-05-23 23:48:37.619 UTC"
                 },
                 "sig": {
                     "info": {
                         "@class": "Modelo.Reclamo",
-                        "reclamo": 13,
-                        "fecha": "2023-05-21 20:46:15.224 UTC"
+                        "reclamo": "peticion ",
+                        "fecha": "2023-05-24 00:07:04.471 UTC"
                     }
                 }
             },
