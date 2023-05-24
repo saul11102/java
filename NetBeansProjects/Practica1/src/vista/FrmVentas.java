@@ -119,13 +119,13 @@ public class FrmVentas extends javax.swing.JDialog {
             }
         });
         jPanel1.add(btnGuardar);
-        btnGuardar.setBounds(240, 140, 87, 28);
+        btnGuardar.setBounds(330, 150, 87, 28);
 
         jLabel3.setText("Valor: ");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(340, 100, 41, 18);
+        jLabel3.setBounds(20, 160, 41, 18);
         jPanel1.add(txtValor);
-        txtValor.setBounds(440, 100, 160, 28);
+        txtValor.setBounds(100, 150, 160, 28);
 
         tblTabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -141,7 +141,7 @@ public class FrmVentas extends javax.swing.JDialog {
         jScrollPane1.setViewportView(tblTabla);
 
         jPanel1.add(jScrollPane1);
-        jScrollPane1.setBounds(20, 190, 456, 190);
+        jScrollPane1.setBounds(20, 210, 456, 190);
 
         btnSeleccionar.setText("Seleccionar ");
         btnSeleccionar.addActionListener(new java.awt.event.ActionListener() {
@@ -150,7 +150,7 @@ public class FrmVentas extends javax.swing.JDialog {
             }
         });
         jPanel1.add(btnSeleccionar);
-        btnSeleccionar.setBounds(30, 400, 130, 28);
+        btnSeleccionar.setBounds(490, 150, 130, 28);
         jPanel1.add(lblMes);
         lblMes.setBounds(150, 100, 90, 20);
 
@@ -158,7 +158,7 @@ public class FrmVentas extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 612, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 659, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

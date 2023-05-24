@@ -5,11 +5,11 @@
 package controlador;
 
 import controlador.exception.EspacioException;
+import java.util.ArrayList; // Importa la clase ArrayList
 import java.util.List;
 import modelo.EnumMes;
 import modelo.Sucursal;
 import modelo.Venta;
-
 /**
  *
  * @author jostin
@@ -17,15 +17,15 @@ import modelo.Venta;
 public class SucursalControl {
     private List<Sucursal> sucursales;
     private Sucursal sucursal;
-    private Venta ventas;
-    public SucursalControl() {
-       
+    private List<Venta> ventas; // Cambia el tipo de dato a List<Venta>
 
+    public SucursalControl() {
+        sucursales = new ArrayList<>(); // Inicializa la lista de sucursales
+        ventas = new ArrayList<>(); // Inicializa la lista de ventas
     }
 
     public Sucursal getSucursal() {
-        if (sucursal == null) // cuando se necesite el objeto lo usa sino no 
-        {
+        if (sucursal == null) {
             sucursal = new Sucursal();
         }
         return sucursal;
@@ -39,13 +39,14 @@ public class SucursalControl {
         this.sucursales = sucursales;
     }
 
-    public Venta getVentas() {
+    public List<Venta> getVentas() { // Cambia el tipo de dato del getter
         return ventas;
     }
 
-    public void setVentas(Venta ventas) {
+    public void setVentas(List<Venta> ventas) { // Cambia el tipo de dato del setter
         this.ventas = ventas;
     }
+
 
     
     /*
