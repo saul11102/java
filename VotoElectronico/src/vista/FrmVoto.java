@@ -6,7 +6,7 @@ package vista;
 
 /**
  *
- * @author D E L L
+ * @author Juan_fer
  */
 public class FrmVoto extends javax.swing.JDialog {
 
