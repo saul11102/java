@@ -6,10 +6,9 @@ package modelo;
 
 /**
  *
- * @author santiago
+ * @author alejandro
  */
-public class Usuario {
+public class Voto {
     private Integer id;
-    private String nombre;
-    private String cedula;
+    
 }
