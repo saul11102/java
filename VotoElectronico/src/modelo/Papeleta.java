@@ -10,4 +10,7 @@ package modelo;
  */
 public class Papeleta {
     private Integer id;
+    private String informacion;
+    
+    
 }
