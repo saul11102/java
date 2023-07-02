@@ -15,7 +15,17 @@ import Controlador.ed.lista.ListaEnlazada;
 public class Dignidad {
     private Integer id;
     private String nombre;
-    private ListaEnlazada<Candidato> candidatos;
+    private Integer candidato_Id;
+
+    public Dignidad() {
+    }
+    
+
+    public Dignidad(Integer id, String nombre, Integer candidato_Id) {
+        this.id = id;
+        this.nombre = nombre;
+        this.candidato_Id = candidato_Id;
+    }
 
     public Integer getId() {
         return id;
@@ -33,28 +43,12 @@ public class Dignidad {
         this.nombre = nombre;
     }
 
-    public ListaEnlazada<Candidato> getCandidatos() {
-        return candidatos;
+    public Integer getCandidato_Id() {
+        return candidato_Id;
     }
 
-    public void setCandidatos(ListaEnlazada<Candidato> candidatos) {
-        this.candidatos = candidatos;
+    public void setCandidato_Id(Integer candidato_Id) {
+        this.candidato_Id = candidato_Id;
     }
-
     
-
-    public void agregarCandidato(Candidato candidato) {
-        candidatos.insertarNodo(candidato);
-    }
-
-    public void eliminarCandidato(Candidato candidato) {
-        try {
-            int index = candidatos.getIndex(candidato);
-            if (index != -1) {
-                candidatos.delete(index);
-            }
-        } catch (PosicionException | VacioException e) {
-            e.printStackTrace();
-        }
-    }
 }
