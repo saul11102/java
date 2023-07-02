@@ -11,6 +11,7 @@ package modelo;
  * @author jostin
  */
 public class Candidato {
+    
     private Integer id;
     private String nombre;
     private PartidoPolitico partidoPolitico;
