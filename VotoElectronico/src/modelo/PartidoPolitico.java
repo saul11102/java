@@ -16,15 +16,17 @@ public class PartidoPolitico {
     private String slogan;
     private String lider;
     private String sede;
+    private Integer Candidato_Id;
     private ListaEnlazada<Candidato> candidatos;
 
-    public PartidoPolitico(Integer id, String nombre, String slogan, String lider, String sede) {
+    public PartidoPolitico(Integer id, String nombre, String slogan, String lider, String sede, Integer Candidato_Id, ListaEnlazada<Candidato> candidatos) {
         this.id = id;
         this.nombre = nombre;
         this.slogan = slogan;
         this.lider = lider;
         this.sede = sede;
-        this.candidatos = new ListaEnlazada<>();
+        this.Candidato_Id = Candidato_Id;
+        this.candidatos = candidatos;
     }
 
     public Integer getId() {
@@ -67,6 +69,14 @@ public class PartidoPolitico {
         this.sede = sede;
     }
 
+    public Integer getCandidato_Id() {
+        return Candidato_Id;
+    }
+
+    public void setCandidato_Id(Integer Candidato_Id) {
+        this.Candidato_Id = Candidato_Id;
+    }
+
     public ListaEnlazada<Candidato> getCandidatos() {
         return candidatos;
     }
@@ -74,7 +84,6 @@ public class PartidoPolitico {
     public void setCandidatos(ListaEnlazada<Candidato> candidatos) {
         this.candidatos = candidatos;
     }
-    
 
     public void agregarCandidato(Candidato candidato) {
         candidatos.insertarNodo(candidato);

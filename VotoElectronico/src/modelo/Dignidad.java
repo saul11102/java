@@ -15,6 +15,7 @@ import Controlador.ed.lista.ListaEnlazada;
 public class Dignidad {
     private Integer id;
     private String nombre;
+    private Integer Candidato_Id;
     private ListaEnlazada<Candidato> candidatos;
 
     public Integer getId() {
@@ -31,6 +32,14 @@ public class Dignidad {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public Integer getCandidato_Id() {
+        return Candidato_Id;
+    }
+
+    public void setCandidato_Id(Integer Candidato_Id) {
+        this.Candidato_Id = Candidato_Id;
     }
 
     public ListaEnlazada<Candidato> getCandidatos() {
