@@ -8,32 +8,40 @@ import Controlador.ed.lista.Exception.VacioException;
 import Controlador.ed.lista.ListaEnlazada;
 /**
  *
- * @author alejandro
+ * @author Kevin
  */
 
 
 public class Dignidad {
-    private int id;
+    private Integer id;
     private String nombre;
     private ListaEnlazada<Candidato> candidatos;
 
-    public Dignidad(int id, String nombre) {
-        this.id = id;
-        this.nombre = nombre;
-        this.candidatos = new ListaEnlazada<>();
+    public Integer getId() {
+        return id;
     }
 
-    public int getId() {
-        return id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getNombre() {
         return nombre;
     }
 
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
     public ListaEnlazada<Candidato> getCandidatos() {
         return candidatos;
     }
+
+    public void setCandidatos(ListaEnlazada<Candidato> candidatos) {
+        this.candidatos = candidatos;
+    }
+
+    
 
     public void agregarCandidato(Candidato candidato) {
         candidatos.insertarNodo(candidato);
