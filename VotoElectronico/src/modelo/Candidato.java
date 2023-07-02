@@ -13,6 +13,7 @@ package modelo;
 public class Candidato {
     
     private Integer id;
+    
     private String nombre;
     private PartidoPolitico partidoPolitico;
     public Candidato(Integer id, String nombre, PartidoPolitico partidoPolitico) {
