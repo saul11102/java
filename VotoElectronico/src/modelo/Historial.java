@@ -9,7 +9,7 @@ import java.util.Date;
 
 /**
  *
- * @author alejandro
+ * @author juanfer
  */
 public class Historial {
 

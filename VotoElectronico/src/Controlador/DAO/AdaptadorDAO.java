@@ -23,8 +23,6 @@ public class AdaptadorDAO<T> {
     private Conexion conexion;
     private Class clazz;
     private String url;
-    public static Integer Ascendente = 0;
-    public static Integer Descendente = 1;
 
     public AdaptadorDAO(Class clazz) {
         this.conexion = new Conexion();

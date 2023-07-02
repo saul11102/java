@@ -4,41 +4,44 @@
  */
 package modelo;
 
+import Controlador.ed.lista.ListaEnlazada;
+
 /**
  *
  * @author alejandro
  */
 public class Cuenta {
+
     private Integer id;
+    private String username;
     private String contrasena;
 
-    /**
-     * @return the id
-     */
     public Integer getId() {
         return id;
     }
 
-    /**
-     * @param id the id to set
-     */
     public void setId(Integer id) {
         this.id = id;
     }
 
-    /**
-     * @return the contrasena
-     */
     public String getContrasena() {
         return contrasena;
     }
 
-    /**
-     * @param contrasena the contrasena to set
-     */
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
     }
-    
-    
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    @Override
+    public String toString() {
+        return "Cuenta{" + "id=" + id + ", contrasena='" + contrasena + '}';
+    }
 }
