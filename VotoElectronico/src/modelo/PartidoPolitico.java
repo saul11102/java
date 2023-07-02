@@ -8,7 +8,7 @@ import Controlador.ed.lista.ListaEnlazada;
 
 /**
  *
- * @author alejandro
+ * @author Kevin
  */
 public class PartidoPolitico {
     private Integer id;
