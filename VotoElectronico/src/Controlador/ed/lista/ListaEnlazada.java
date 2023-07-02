@@ -246,4 +246,18 @@ public class ListaEnlazada<E> {
         }
         return this;
     }
+    public int getIndex(E elemento) {
+        NodoLista<E> actual = cabecera;
+        int indice = 0;
+
+        while (actual != null) {
+            if (actual.getInfo().equals(elemento)) {
+                return indice;
+            }
+            actual = actual.getSig();
+            indice++;
+        }
+
+        return -1;
+    }
 }

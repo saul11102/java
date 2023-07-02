@@ -14,4 +14,25 @@ public class Candidato {
     private Integer id;
     private String nombre;
     private PartidoPolitico partidoPolitico;
+    public Candidato(Integer id, String nombre, PartidoPolitico partidoPolitico) {
+        this.id = id;
+        this.nombre = nombre;
+        this.partidoPolitico = partidoPolitico;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public PartidoPolitico getPartidoPolitico() {
+        return partidoPolitico;
+    }
+
+    public void setPartidoPolitico(PartidoPolitico partidoPolitico) {
+        this.partidoPolitico = partidoPolitico;
+    }
 }
