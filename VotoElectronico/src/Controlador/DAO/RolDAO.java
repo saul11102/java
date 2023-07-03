@@ -21,42 +21,36 @@ public class RolDAO {
         listaRoles = new ListaEnlazada<>();
     }
 
-    public class RolController {
+    public void crearRol(Integer id, String nombre, String descripcion) {
+        Rol rol = new Rol();
+        rol.setId(id);
+        rol.setNombre(nombre);
+        rol.setDescripcion(descripcion);
 
-        private Rol rol;
-
-        public void crearRol(Integer id, String nombre, String descripcion) {
-            Rol rol = new Rol();
-            rol.setId(id);
-            rol.setNombre(nombre);
-            rol.setDescripcion(descripcion);
-
-            if (verificarExistenciaRol(id)) {
-                System.out.println("El rol con el ID " + id + " ya existe en el sistema.");
-                return;
-            }
-
-            listaRoles.insertarNodo(rol);
-            System.out.println("El rol se ha creado exitosamente en el sistema.");
+        if (verificarExistenciaRol(id)) {
+            System.out.println("El rol con el ID " + id + " ya existe en el sistema.");
+            return;
         }
 
-        private boolean verificarExistenciaRol(Integer id) {
-            try {
-                for (int i = 0; i < listaRoles.size(); i++) {
-                    Rol rol = listaRoles.get(i);
-                    if (rol.getId().equals(id)) {
-                        return true; // El rol ya existe en la lista
-                    }
+        listaRoles.insertarNodo(rol);
+        System.out.println("El rol se ha creado exitosamente en el sistema.");
+    }
+
+    private boolean verificarExistenciaRol(Integer id) {
+        try {
+            for (int i = 0; i < listaRoles.size(); i++) {
+                Rol rol = listaRoles.get(i);
+                if (rol.getId().equals(id)) {
+                    return true; // El rol ya existe en la lista
                 }
-            } catch (VacioException | PosicionException e) {
-                e.printStackTrace();
             }
-            return false;
+        } catch (VacioException | PosicionException e) {
+            e.printStackTrace();
         }
+        return false;
     }
 
     public void actualizarRol(Integer id, String nombre, String descripcion) {
-
         Rol rol = buscarRolPorId(id);
         if (rol == null) {
             System.out.println("El rol con el ID " + id + " no existe en el sistema.");
@@ -87,7 +81,7 @@ public class RolDAO {
         Rol rol = buscarRolPorId(id);
         if (rol == null) {
             System.out.println("El rol con el ID " + id + " no existe en el sistema.");
-            return; 
+            return;
         }
 
         try {
@@ -104,11 +98,10 @@ public class RolDAO {
                 listaRoles.delete(posicion);
                 System.out.println("El rol se ha eliminado exitosamente del sistema.");
             } else {
-                System.out.println("No se encontro el rol con el ID " + id + " en la lista.");
+                System.out.println("No se encontró el rol con el ID " + id + " en la lista.");
             }
         } catch (VacioException | PosicionException e) {
             e.printStackTrace();
         }
     }
-
 }
