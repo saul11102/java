@@ -9,7 +9,7 @@ import Controlador.ed.lista.ListaEnlazada;
 
 /**
  *
- * @author alejandro
+ * @author santiago
  */
 public class Papeleta {
     private Integer id;
