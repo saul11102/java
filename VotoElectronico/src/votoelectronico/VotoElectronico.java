@@ -4,17 +4,26 @@
  */
 package votoelectronico;
 
+import Controlador.DAO.CuentaDAO;
+import Controlador.ed.lista.Exception.PosicionException;
+import Controlador.ed.lista.Exception.VacioException;
+import java.io.IOException;
+import modelo.Cuenta;
+
 /**
  *
  * @author alejandro
  */
 public class VotoElectronico {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        
+    public static void main(String[] args) throws VacioException, PosicionException, IOException {
+        CuentaDAO cuentaDAO = new CuentaDAO();
+
+        String username = "1104982572";
+        String contrasena = "prueba1";
+        cuentaDAO.guardar(username, contrasena);
+
+        Cuenta cuenta = cuentaDAO.getCuenta();
+        System.out.println("Cuenta guardada: " + cuenta.getUsername() + ", " + cuenta.getContrasena());
     }
-    
 }

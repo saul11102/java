@@ -13,49 +13,44 @@ import java.util.Date;
  */
 public class Historial {
 
-    private Integer id;
-    private ListaEnlazada<Persona> persona;
-    private Date fechaVotacion;
-    private ListaEnlazada<Eleccion> elecciones;
-    private ListaEnlazada<Voto> votos;
+  private Voto voto;
+    private Date fecha;
 
-    public Integer getId() {
-        return id;
+    public Historial() {
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public Historial(Voto voto, Date fecha) {
+        this.voto = voto;
+        this.fecha = fecha;
     }
 
-    public ListaEnlazada<Persona> getPersona() {
-        return persona;
+    /**
+     * @return the fecha
+     */
+    public Date getFecha() {
+        return fecha;
     }
 
-    public void setPersona(ListaEnlazada<Persona> persona) {
-        this.persona = persona;
+    /**
+     * @param fecha the fecha to set
+     */
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
-    public Date getFechaVotacion() {
-        return fechaVotacion;
+    /**
+     * @return the voto
+     */
+    public Voto getVoto() {
+        return voto;
     }
 
-    public void setFechaVotacion(Date fechaVotacion) {
-        this.fechaVotacion = fechaVotacion;
+    /**
+     * @param voto the voto to set
+     */
+    public void setVoto(Voto voto) {
+        this.voto = voto;
     }
 
-    public ListaEnlazada<Eleccion> getElecciones() {
-        return elecciones;
-    }
-
-    public void setElecciones(ListaEnlazada<Eleccion> elecciones) {
-        this.elecciones = elecciones;
-    }
-
-    public ListaEnlazada<Voto> getVotos() {
-        return votos;
-    }
-
-    public void setVotos(ListaEnlazada<Voto> votos) {
-        this.votos = votos;
-    }
 }
+
