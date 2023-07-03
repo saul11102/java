@@ -33,7 +33,7 @@ public class RolDAO {
 
             if (verificarExistenciaRol(id)) {
                 System.out.println("El rol con el ID " + id + " ya existe en el sistema.");
-                return; 
+                return;
             }
 
             listaRoles.insertarNodo(rol);
@@ -51,23 +51,21 @@ public class RolDAO {
             } catch (VacioException | PosicionException e) {
                 e.printStackTrace();
             }
-            return false; 
+            return false;
         }
     }
 
     public void actualizarRol(Integer id, String nombre, String descripcion) {
-        
+
         Rol rol = buscarRolPorId(id);
         if (rol == null) {
             System.out.println("El rol con el ID " + id + " no existe en el sistema.");
-            return; 
+            return;
         }
 
-        
         rol.setNombre(nombre);
         rol.setDescripcion(descripcion);
 
-        
         System.out.println("El rol se ha actualizado exitosamente en el sistema.");
     }
 
@@ -76,16 +74,41 @@ public class RolDAO {
             for (int i = 0; i < listaRoles.size(); i++) {
                 Rol rol = listaRoles.get(i);
                 if (rol.getId().equals(id)) {
-                    return rol; 
+                    return rol;
                 }
             }
         } catch (VacioException | PosicionException e) {
             e.printStackTrace();
         }
-        return null; 
+        return null;
     }
 
-    public void eliminarRol() {
-       
+    public void eliminarRol(Integer id) {
+        Rol rol = buscarRolPorId(id);
+        if (rol == null) {
+            System.out.println("El rol con el ID " + id + " no existe en el sistema.");
+            return; 
+        }
+
+        try {
+            int posicion = -1;
+            for (int i = 0; i < listaRoles.size(); i++) {
+                Rol r = listaRoles.get(i);
+                if (r.getId().equals(id)) {
+                    posicion = i;
+                    break;
+                }
+            }
+
+            if (posicion != -1) {
+                listaRoles.delete(posicion);
+                System.out.println("El rol se ha eliminado exitosamente del sistema.");
+            } else {
+                System.out.println("No se encontro el rol con el ID " + id + " en la lista.");
+            }
+        } catch (VacioException | PosicionException e) {
+            e.printStackTrace();
+        }
     }
+
 }
