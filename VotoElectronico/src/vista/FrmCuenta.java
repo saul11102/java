@@ -167,7 +167,6 @@ public class FrmCuenta extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Verificar los campos");
         }
     } catch (VacioException | PosicionException e) {
-        // Manejar las excepciones VacioException y PosicionException
         JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
     }
     }//GEN-LAST:event_btnIngresarActionPerformed
