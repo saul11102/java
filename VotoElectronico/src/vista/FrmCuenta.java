@@ -117,7 +117,7 @@ public class FrmCuenta extends javax.swing.JDialog {
                 .addComponent(btnIngresar)
                 .addGap(45, 45, 45)
                 .addComponent(jLabel3)
-                .addContainerGap(118, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -134,7 +134,7 @@ public class FrmCuenta extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         pack();
