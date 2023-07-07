@@ -41,7 +41,7 @@ public class RolDAO {
             for (int i = 0; i < listaRoles.size(); i++) {
                 Rol rol = listaRoles.get(i);
                 if (rol.getId().equals(id)) {
-                    return true; // El rol ya existe en la lista
+                    return true;
                 }
             }
         } catch (VacioException | PosicionException e) {
