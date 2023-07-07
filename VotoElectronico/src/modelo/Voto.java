@@ -17,6 +17,19 @@ public class Voto {
     private Date fechaVoto;
     private Integer eleccionId;
 
+    public Voto() {
+    }
+
+    public Voto(Integer id, Integer votanteId, Integer candidatoId, Date fechaVoto, Integer eleccionId) {
+        this.id = id;
+        this.votanteId = votanteId;
+        this.candidatoId = candidatoId;
+        this.fechaVoto = fechaVoto;
+        this.eleccionId = eleccionId;
+    }
+    
+    
+
     public Integer getId() {
         return id;
     }
