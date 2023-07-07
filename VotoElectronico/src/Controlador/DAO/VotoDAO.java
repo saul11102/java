@@ -18,6 +18,7 @@ import modelo.Voto;
 public class VotoDAO {
 
     private ListaEnlazada<Voto> listaVotos;
+    
 
     public VotoDAO() {
         listaVotos = new ListaEnlazada<>();
