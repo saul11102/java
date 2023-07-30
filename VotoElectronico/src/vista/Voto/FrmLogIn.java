@@ -14,7 +14,7 @@ import modelo.Rol;
 
 /**
  *
- * @author alejandro
+ * @author santiago
  */
 public class FrmLogIn extends javax.swing.JDialog {
     private CuentaDAO cd = new CuentaDAO();

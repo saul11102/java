@@ -10,19 +10,56 @@ import Controlador.ed.lista.Exception.VacioException;
 import java.awt.Frame;
 import javax.swing.JOptionPane;
 import modelo.Cuenta;
+import vista.Utilidades.CargarCombo;
 
 /**
  *
  * @author santiago
  */
 public class FrmCuenta extends javax.swing.JDialog {
-
+    private CuentaDAO cd = new CuentaDAO();
+    private ModeloTablaCuenta modelo = new ModeloTablaCuenta();
+    private PersonaDAO pd = new PersonaDAO();
     /**
      * Creates new form FrmCuenta
      */
     public FrmCuenta(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+    }
+    
+     public void cargarTabla() {
+        modelo.setLista(cd.listar());
+        tblCuenta.setModel(modelo);
+        tblCuenta.updateUI();
+    }
+    
+    public void limpiar(){
+        txtContrasena.setText("");
+        cbxPersona.setSelectedItem(0);
+        cargarTabla();
+        cargarCombo();
+    }
+    
+    private void cargarCombo() {
+        try {
+            CargarCombo.cargarPersona(cbxPersona, pd);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }
+    
+    private void guardar() throws Exception {
+        if (txtContrasena.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Ingrese una contraseña");
+        } else {
+            cd.getCuenta().setId_Persona(pd.buscarPorCedula(cbxPersona.getSelectedItem().toString()).getId());
+            cd.getCuenta().setContrasena(txtContrasena.getText().toString());
+            cd.guardar();
+            JOptionPane.showMessageDialog(null, "Cuenta guardada");
+            limpiar();
+        }
     }
 
     /**
@@ -35,13 +72,14 @@ public class FrmCuenta extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblCuenta = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        txtCedula = new javax.swing.JTextField();
+        cbxPersona = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
-        txtContrasena = new javax.swing.JPasswordField();
-        btnIngresar = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
+        txtContrasena = new javax.swing.JTextField();
+        btnGuardar = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -56,24 +94,31 @@ public class FrmCuenta extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Login"));
-
-        jLabel1.setText("Ingrese su cedula: ");
-
-        txtCedula.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCedulaActionPerformed(evt);
+        tblCuenta.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        });
+        ));
+        jScrollPane1.setViewportView(tblCuenta);
 
-        jLabel2.setText("Ingrese su contrasena:");
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Agregar Nueva Cuenta"));
 
-        txtContrasena.setText("jPasswordField1");
+        jLabel1.setText("Persona:");
 
-        btnIngresar.setText("Ingresar");
-        btnIngresar.addActionListener(new java.awt.event.ActionListener() {
+        cbxPersona.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel2.setText("Contraseña: ");
+
+        btnGuardar.setText("GUARDAR");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnIngresarActionPerformed(evt);
+                btnGuardarActionPerformed(evt);
             }
         });
 
@@ -82,42 +127,35 @@ public class FrmCuenta extends javax.swing.JDialog {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(30, 30, 30)
-                                .addComponent(txtContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jLabel1)
+                        .addGap(31, 31, 31)
+                        .addComponent(cbxPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(171, 171, 171)
-                        .addComponent(btnIngresar))
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(jLabel3)))
-                .addContainerGap(160, Short.MAX_VALUE))
+                        .addGap(153, 153, 153)
+                        .addComponent(btnGuardar)))
+                .addContainerGap(298, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(38, 38, 38)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
+                    .addComponent(cbxPersona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(46, 46, 46)
-                .addComponent(btnIngresar)
-                .addGap(45, 45, 45)
-                .addComponent(jLabel3)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addComponent(btnGuardar)
+                .addGap(23, 23, 23))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -126,50 +164,33 @@ public class FrmCuenta extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCedulaActionPerformed
-
-    private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-        // TODO add your handling code here:
-        CuentaDAO cuentaDAO = new CuentaDAO();
-
-    String username = txtCedula.getText();
-    String password = txtContrasena.getText();
-
-    try {
-        Cuenta cuenta = cuentaDAO.buscar(username, password);
-
-        if (username.length() >= 5 && password.length() >= 5) {
-            if (cuenta != null) {
-                JOptionPane.showMessageDialog(null, "Bienvenido " + cuenta.getUsername());
-
-                FrmPapeleta2 menu = new FrmPapeleta2();
-                menu.setVisible(true);
-            } else {
-                JOptionPane.showMessageDialog(null, "Usuario Incorrecto");
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Verificar los campos");
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        try {
+            guardar();
+        } catch (Exception ex) {
+            Logger.getLogger(FrmCuenta.class.getName()).log(Level.SEVERE, null, ex);
         }
-    } catch (VacioException | PosicionException e) {
-        JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
-    }
-    }//GEN-LAST:event_btnIngresarActionPerformed
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
 /**
  * @param args the command line arguments
@@ -226,13 +247,14 @@ public void windowClosing(java.awt.event.WindowEvent e) {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnIngresar;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JComboBox<String> cbxPersona;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField txtCedula;
-    private javax.swing.JPasswordField txtContrasena;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblCuenta;
+    private javax.swing.JTextField txtContrasena;
     // End of variables declaration//GEN-END:variables
 }

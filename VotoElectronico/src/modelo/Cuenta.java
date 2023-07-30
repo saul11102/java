@@ -12,9 +12,18 @@ import Controlador.ed.lista.ListaEnlazada;
  */
 public class Cuenta {
 
-    private Integer id;
-    private String username;
+   private Integer id;
     private String contrasena;
+    private Integer id_Persona;
+
+    public Cuenta() {
+    }
+
+    public Cuenta(Integer id, String contrasena, Integer id_Persona) {
+        this.id = id;
+        this.contrasena = contrasena;
+        this.id_Persona = id_Persona;
+    }
 
     public Integer getId() {
         return id;
@@ -32,16 +41,12 @@ public class Cuenta {
         this.contrasena = contrasena;
     }
 
-    public String getUsername() {
-        return username;
+    public Integer getId_Persona() {
+        return id_Persona;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setId_Persona(Integer id_Persona) {
+        this.id_Persona = id_Persona;
     }
-
-    @Override
-    public String toString() {
-        return "Cuenta{" + "id=" + id + ", contrasena='" + contrasena + '}';
-    }
+    
 }

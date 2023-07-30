@@ -16,31 +16,54 @@ import modelo.Cuenta;
  */
 public class CuentaDAO extends AdaptadorDAO<Cuenta> {
 
+    private Cuenta cuenta; 
+    
     public CuentaDAO() {
         super(Cuenta.class);
     }
-
-    public void guardar(String username, String contrasena) throws IOException {
-        Cuenta cuenta = new Cuenta();
-        cuenta.setId(generarId());
-        cuenta.setUsername(username);
-        cuenta.setContrasena(contrasena);
-        super.guardar(cuenta);
+    
+    public Cuenta getCuenta() {
+        if (this.cuenta == null) {
+            this.cuenta = new Cuenta();
+        }
+        return cuenta;
     }
 
-    public Cuenta buscar(String username, String password) throws VacioException, PosicionException {
-        AdaptadorDAO<Cuenta> adaptadorDao = new AdaptadorDAO<>(Cuenta.class);
-        ListaEnlazada<Cuenta> listaCuentas = adaptadorDao.listar();
-        for (int i = 0; i < listaCuentas.size(); i++) {
-            Cuenta cuenta = listaCuentas.get(i);
-            if (cuenta.getUsername().equals(username) && cuenta.getContrasena().equals(password)) {
-                return cuenta;
+    public void setCuenta(Cuenta cuenta) {
+        this.cuenta = cuenta;
+    }
+
+    public void guardar() throws IOException {
+        cuenta.setId(generarId());
+        this.guardar(cuenta);
+    }
+
+    public void modificar(Integer pos) throws Exception {
+        this.modificar(cuenta, pos);
+    }
+
+    private Integer generateID() {
+        return listar().size() + 1;
+    }
+    
+    /**
+     * 
+     * @param dato
+     * @return
+     * @throws Exception 
+     */
+    
+    public Cuenta buscarporId(Integer dato) throws Exception{
+         Cuenta resultado = null;
+        ListaEnlazada<Cuenta> lista = listar();
+        for (int i = 0; i < lista.size(); i++) {
+            Cuenta aux = lista.get(i);
+            if (aux.getId().intValue() == dato.intValue()) {
+                resultado = aux;
+                break;
             }
         }
-        return null;
+        return resultado;
     }
 
-    public Cuenta getCuenta() {
-        return obtener(1);
-    }
 }

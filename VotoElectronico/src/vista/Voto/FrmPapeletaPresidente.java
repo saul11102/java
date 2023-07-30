@@ -15,7 +15,7 @@ import modelo.Persona;
 
 /**
  *
- * @author alejandro
+ * @author santiago
  */
 public class FrmPapeletaPresidente extends javax.swing.JDialog {
     private PartidoPoliticoDao ppd = new PartidoPoliticoDao();
