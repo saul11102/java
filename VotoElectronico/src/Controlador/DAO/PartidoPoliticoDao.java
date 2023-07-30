@@ -11,7 +11,7 @@ import modelo.PartidoPolitico;
 
 /**
  *
- * @author alejandro
+ * @author Kevin
  */
 public class PartidoPoliticoDao extends AdaptadorDAO<PartidoPolitico> {
 
@@ -51,6 +51,19 @@ public class PartidoPoliticoDao extends AdaptadorDAO<PartidoPolitico> {
         for (int i = 0; i < lista.size(); i++) {
             PartidoPolitico aux = lista.get(i);
             if (aux.getNombre().toLowerCase().equals(dato.toLowerCase())) {
+                resultado = aux;
+                break;
+            }
+        }
+        return resultado;
+    }
+    
+    public PartidoPolitico buscarPorId(Integer dato) throws Exception {
+        PartidoPolitico resultado = null;
+        ListaEnlazada<PartidoPolitico> lista = listar();
+        for (int i = 0; i < lista.size(); i++) {
+            PartidoPolitico aux = lista.get(i);
+            if (aux.getId().intValue() == dato.intValue()) {
                 resultado = aux;
                 break;
             }

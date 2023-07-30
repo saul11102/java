@@ -6,6 +6,7 @@ package modelo;
 import Controlador.ed.lista.Exception.PosicionException;
 import Controlador.ed.lista.Exception.VacioException;
 import Controlador.ed.lista.ListaEnlazada;
+import java.util.Date;
 /**
  *
  * @author Kevin
@@ -15,17 +16,7 @@ import Controlador.ed.lista.ListaEnlazada;
 public class Dignidad {
     private Integer id;
     private String nombre;
-    private Integer candidato_Id;
-
-    public Dignidad() {
-    }
-    
-
-    public Dignidad(Integer id, String nombre, Integer candidato_Id) {
-        this.id = id;
-        this.nombre = nombre;
-        this.candidato_Id = candidato_Id;
-    }
+    private String vigencia;
 
     public Integer getId() {
         return id;
@@ -43,12 +34,16 @@ public class Dignidad {
         this.nombre = nombre;
     }
 
-    public Integer getCandidato_Id() {
-        return candidato_Id;
+    public String getVigencia() {
+        return vigencia;
     }
 
-    public void setCandidato_Id(Integer candidato_Id) {
-        this.candidato_Id = candidato_Id;
+    public void setVigencia(String vigencia) {
+        this.vigencia = vigencia;
     }
+
+    
+
+    
     
 }

@@ -10,7 +10,7 @@ import modelo.Dignidad;
 
 /**
  *
- * @author alejandro
+ * @author Kevin
  */
 public class DignidadDao extends AdaptadorDAO<Dignidad> {
 
@@ -57,5 +57,3 @@ public class DignidadDao extends AdaptadorDAO<Dignidad> {
         return resultado;
     }
 }
-
-

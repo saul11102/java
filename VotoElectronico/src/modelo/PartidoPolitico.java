@@ -14,20 +14,24 @@ public class PartidoPolitico {
     private Integer id;
     private String nombre;
     private String slogan;
+    private String foto;
+    private String siglas;
     private String lider;
     private String sede;
-    private Integer candidato_Id;
+    private Integer nroLista;
 
     public PartidoPolitico() {
     }
 
-    public PartidoPolitico(Integer id, String nombre, String slogan, String lider, String sede, Integer candidato_Id) {
+    public PartidoPolitico(Integer id, String nombre, String slogan, String foto, String siglas, String lider, String sede, Integer nroLista) {
         this.id = id;
         this.nombre = nombre;
         this.slogan = slogan;
+        this.foto = foto;
+        this.siglas = siglas;
         this.lider = lider;
         this.sede = sede;
-        this.candidato_Id = candidato_Id;
+        this.nroLista = nroLista;
     }
 
     public Integer getId() {
@@ -54,6 +58,22 @@ public class PartidoPolitico {
         this.slogan = slogan;
     }
 
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
+
+    public String getSiglas() {
+        return siglas;
+    }
+
+    public void setSiglas(String siglas) {
+        this.siglas = siglas;
+    }
+
     public String getLider() {
         return lider;
     }
@@ -70,13 +90,15 @@ public class PartidoPolitico {
         this.sede = sede;
     }
 
-    public Integer getCandidato_Id() {
-        return candidato_Id;
+    public Integer getNroLista() {
+        return nroLista;
     }
 
-    public void setCandidato_Id(Integer candidato_Id) {
-        this.candidato_Id = candidato_Id;
+    public void setNroLista(Integer nroLista) {
+        this.nroLista = nroLista;
     }
 
     
+    
 }
+
