@@ -12,45 +12,41 @@ import java.util.Date;
  * @author juanfer
  */
 public class Historial {
-
-  private Voto voto;
-    private Date fecha;
+    private Integer id;
+    private String fecha;
+    private Integer id_Cuenta;
 
     public Historial() {
     }
 
-    public Historial(Voto voto, Date fecha) {
-        this.voto = voto;
+    public Historial(Integer id, String fecha, Integer id_Cuenta) {
+        this.id = id;
         this.fecha = fecha;
+        this.id_Cuenta = id_Cuenta;
     }
 
-    /**
-     * @return the fecha
-     */
-    public Date getFecha() {
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getFecha() {
         return fecha;
     }
 
-    /**
-     * @param fecha the fecha to set
-     */
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 
-    /**
-     * @return the voto
-     */
-    public Voto getVoto() {
-        return voto;
+    public Integer getId_Cuenta() {
+        return id_Cuenta;
     }
 
-    /**
-     * @param voto the voto to set
-     */
-    public void setVoto(Voto voto) {
-        this.voto = voto;
+    public void setId_Cuenta(Integer id_Cuenta) {
+        this.id_Cuenta = id_Cuenta;
     }
-
 }
 

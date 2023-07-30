@@ -12,9 +12,27 @@ public class Persona {
     private Integer id;
     private String cedula;
     private String nombre;
+    private String apellido;
     private String direccion;
     private String correoElectronico;
     private String numeroTelefono;
+    private Boolean estado;
+    private Integer id_Rol;
+
+    public Persona() {
+    }
+
+    public Persona(Integer id, String cedula, String nombre, String apellido, String direccion, String correoElectronico, String numeroTelefono, Boolean estado, Integer id_Rol) {
+        this.id = id;
+        this.cedula = cedula;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.direccion = direccion;
+        this.correoElectronico = correoElectronico;
+        this.numeroTelefono = numeroTelefono;
+        this.estado = estado;
+        this.id_Rol = id_Rol;
+    }
 
     public Integer getId() {
         return id;
@@ -40,6 +58,14 @@ public class Persona {
         this.nombre = nombre;
     }
 
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
     public String getDireccion() {
         return direccion;
     }
@@ -63,4 +89,22 @@ public class Persona {
     public void setNumeroTelefono(String numeroTelefono) {
         this.numeroTelefono = numeroTelefono;
     }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+
+    public Integer getId_Rol() {
+        return id_Rol;
+    }
+
+    public void setId_Rol(Integer id_Rol) {
+        this.id_Rol = id_Rol;
+    }
+
+    
 }
