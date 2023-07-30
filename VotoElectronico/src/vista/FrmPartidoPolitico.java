@@ -13,7 +13,7 @@ import vista.ModeloTabla.ModeloTablaPartidoPolitico;
 
 /**
  *
- * @author alejandro
+ * @author Kevin
  */
 public class FrmPartidoPolitico extends javax.swing.JDialog {
 

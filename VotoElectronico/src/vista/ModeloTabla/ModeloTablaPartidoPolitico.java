@@ -10,7 +10,7 @@ import modelo.PartidoPolitico;
 
 /**
  *
- * @author alejandro
+ * @author Kevin
  */
 public class ModeloTablaPartidoPolitico extends AbstractTableModel{
     private ListaEnlazada<PartidoPolitico> lista = new ListaEnlazada<>();

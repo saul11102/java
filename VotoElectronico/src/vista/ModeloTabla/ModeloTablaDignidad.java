@@ -10,7 +10,7 @@ import modelo.Dignidad;
 
 /**
  *
- * @author alejandro
+ * @author Kevin
  */
 public class ModeloTablaDignidad extends AbstractTableModel{
     private ListaEnlazada<Dignidad> lista = new ListaEnlazada<>();
