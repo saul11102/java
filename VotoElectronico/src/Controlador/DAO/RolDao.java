@@ -4,12 +4,13 @@
  */
 package Controlador.DAO;
 
+import Controlador.ed.lista.ListaEnlazada;
 import java.io.IOException;
 import modelo.Rol;
 
 /**
  *
- * @author alejandro
+ * @author jostin
  */
 public class RolDao extends AdaptadorDAO<Rol> {
 
@@ -41,5 +42,31 @@ public class RolDao extends AdaptadorDAO<Rol> {
 
     private Integer generateID() {
         return listar().size() + 1;
+    }
+
+    public Rol buscarPorRol(String dato) throws Exception {
+        Rol resultado = null;
+        ListaEnlazada<Rol> lista = listar();
+        for (int i = 0; i < lista.size(); i++) {
+            Rol aux = lista.get(i);
+            if (aux.getNombre().toLowerCase().equals(dato.toLowerCase())) {
+                resultado = aux;
+                break;
+            }
+        }
+        return resultado;
+    }
+
+    public Rol buscarPorId(Integer dato) throws Exception {
+        Rol resultado = null;
+        ListaEnlazada<Rol> lista = listar();
+        for (int i = 0; i < lista.size(); i++) {
+            Rol aux = lista.get(i);
+            if (aux.getId().intValue() == dato.intValue()) {
+                resultado = aux;
+                break;
+            }
+        }
+        return resultado;
     }
 }
