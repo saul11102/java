@@ -7,6 +7,7 @@ package Controlador.DAO;
 import Controlador.ed.lista.Exception.PosicionException;
 import Controlador.ed.lista.Exception.VacioException;
 import Controlador.ed.lista.ListaEnlazada;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.Voto;
@@ -15,119 +16,35 @@ import modelo.Voto;
  *
  * @author jostin
  */
-public class VotoDAO {
+public class VotoDAO extends AdaptadorDAO<Voto> {
 
-    private ListaEnlazada<Voto> listaVotos;
-    
+    private Voto voto;
 
     public VotoDAO() {
-        listaVotos = new ListaEnlazada<>();
+        super(Voto.class);
     }
 
-    public void insertarVoto(Voto voto) {
-        listaVotos.insertarNodo(voto);
+    public Voto getVoto() {
+        if (this.voto == null) {
+            this.voto = new Voto();
+        }
+        return voto;
     }
 
-    public List<Voto> obtenerVotosPorEleccion(int eleccionId) throws VacioException {
-        List<Voto> votosEleccion = new ArrayList<>();
-
-        for (int i = 1; i <= listaVotos.size(); i++) {
-            try {
-                Voto voto = listaVotos.get(i);
-                if (voto.getEleccionId().equals(eleccionId)) {
-                    votosEleccion.add(voto);
-                }
-            } catch (PosicionException e) {
-
-                e.printStackTrace();
-            }
-        }
-
-        return votosEleccion;
+    public void setVoto(Voto voto) {
+        this.voto = voto;
     }
 
-    public List<Voto> obtenerVotosPorVotante(int votanteId) throws VacioException {
-        List<Voto> votosVotante = new ArrayList<>();
-
-        for (int i = 1; i <= listaVotos.size(); i++) {
-            try {
-                Voto voto = listaVotos.get(i);
-                if (voto.getVotanteId().equals(votanteId)) {
-                    votosVotante.add(voto);
-                }
-            } catch (PosicionException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return votosVotante;
+    public void guardar() throws IOException {
+        voto.setId(generarId());
+        this.guardar(voto);
     }
 
-    public List<Voto> obtenerVotosPorCandidato(int candidatoId) throws VacioException {
-        List<Voto> votosCandidato = new ArrayList<>();
-
-        for (int i = 1; i <= listaVotos.size(); i++) {
-            try {
-                Voto voto = listaVotos.get(i);
-                if (voto.getCandidatoId().equals(candidatoId)) {
-                    votosCandidato.add(voto);
-                }
-            } catch (PosicionException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return votosCandidato;
+    public void modificar(Integer pos) throws Exception {
+        this.modificar(voto, pos);
     }
 
-    public void eliminarVotosPorEleccion(int eleccionId) throws VacioException, PosicionException {
-        List<Voto> votosAEliminar = new ArrayList<>();
-
-        for (int i = 1; i <= listaVotos.size(); i++) {
-            try {
-                Voto voto = listaVotos.get(i);
-                if (voto.getEleccionId().equals(eleccionId)) {
-                    votosAEliminar.add(voto);
-                }
-            } catch (PosicionException e) {
-                e.printStackTrace();
-            }
-        }
-
-        for (Voto voto : votosAEliminar) {
-            listaVotos.delete(listaVotos.getIndex(voto));
-        }
-    }
-
-    public int obtenerTotalVotosPorEleccion(int eleccionId) throws VacioException {
-        int totalVotos = 0;
-
-        for (int i = 1; i <= listaVotos.size(); i++) {
-            try {
-                Voto voto = listaVotos.get(i);
-                if (voto.getEleccionId().equals(eleccionId)) {
-                    totalVotos++;
-                }
-            } catch (PosicionException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return totalVotos;
-    }
-
-    public Voto obtenerVotoPorId(int votoId) throws VacioException {
-        for (int i = 1; i <= listaVotos.size(); i++) {
-            try {
-                Voto voto = listaVotos.get(i);
-                if (voto.getId().equals(votoId)) {
-                    return voto;
-                }
-            } catch (PosicionException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return null;
+    private Integer generateID() {
+        return listar().size() + 1;
     }
 }

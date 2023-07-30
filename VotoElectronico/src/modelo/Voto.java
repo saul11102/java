@@ -12,23 +12,19 @@ import java.util.Date;
  */
 public class Voto {
     private Integer id;
-    private Integer votanteId;
-    private Integer candidatoId;
-    private Date fechaVoto;
-    private Integer eleccionId;
+    private Integer voto_Normal;
+    private Integer voto_Nulo;
+    private Integer voto_Blanco;
 
     public Voto() {
     }
 
-    public Voto(Integer id, Integer votanteId, Integer candidatoId, Date fechaVoto, Integer eleccionId) {
+    public Voto(Integer id, Integer voto_Normal, Integer voto_Nulo, Integer voto_Blanco) {
         this.id = id;
-        this.votanteId = votanteId;
-        this.candidatoId = candidatoId;
-        this.fechaVoto = fechaVoto;
-        this.eleccionId = eleccionId;
+        this.voto_Normal = voto_Normal;
+        this.voto_Nulo = voto_Nulo;
+        this.voto_Blanco = voto_Blanco;
     }
-    
-    
 
     public Integer getId() {
         return id;
@@ -38,36 +34,29 @@ public class Voto {
         this.id = id;
     }
 
-    public Integer getVotanteId() {
-        return votanteId;
+    public Integer getVoto_Normal() {
+        return voto_Normal;
     }
 
-    public void setVotanteId(Integer votanteId) {
-        this.votanteId = votanteId;
+    public void setVoto_Normal(Integer voto_Normal) {
+        this.voto_Normal = voto_Normal;
     }
 
-    public Integer getCandidatoId() {
-        return candidatoId;
+    public Integer getVoto_Nulo() {
+        return voto_Nulo;
     }
 
-    public void setCandidatoId(Integer candidatoId) {
-        this.candidatoId = candidatoId;
+    public void setVoto_Nulo(Integer voto_Nulo) {
+        this.voto_Nulo = voto_Nulo;
     }
 
-    public Date getFechaVoto() {
-        return fechaVoto;
+    public Integer getVoto_Blanco() {
+        return voto_Blanco;
     }
 
-    public void setFechaVoto(Date fechaVoto) {
-        this.fechaVoto = fechaVoto;
+    public void setVoto_Blanco(Integer voto_Blanco) {
+        this.voto_Blanco = voto_Blanco;
     }
 
-    public Integer getEleccionId() {
-        return eleccionId;
-    }
-
-    public void setEleccionId(Integer eleccionId) {
-        this.eleccionId = eleccionId;
-    }
-    
+   
 }
