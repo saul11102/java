@@ -1,0 +1,1 @@
+{"Controlador.ed.lista.ListaEnlazada":{"cabecera":{"info":{"@class":"modelo.Rol","id":1,"nombre":"administrador","descripcion":"Persona que puede gestionar todas las cuentas y demás roles dentro de la aplicación"},"sig":{"info":{"@class":"modelo.Rol","id":2,"nombre":"Usuario","descripcion":"Persona que solo tiene la opción de votar"}}},"size":2}}

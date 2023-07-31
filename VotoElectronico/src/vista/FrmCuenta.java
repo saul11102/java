@@ -5,11 +5,13 @@
 package vista;
 
 import Controlador.DAO.CuentaDAO;
+import Controlador.DAO.PersonaDAO;
 import Controlador.ed.lista.Exception.PosicionException;
 import Controlador.ed.lista.Exception.VacioException;
 import java.awt.Frame;
 import javax.swing.JOptionPane;
 import modelo.Cuenta;
+import vista.ModeloTabla.ModeloTablaCuenta;
 import vista.Utilidades.CargarCombo;
 
 /**
@@ -26,6 +28,7 @@ public class FrmCuenta extends javax.swing.JDialog {
     public FrmCuenta(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        limpiar();
     }
     
      public void cargarTabla() {
@@ -188,7 +191,7 @@ public class FrmCuenta extends javax.swing.JDialog {
         try {
             guardar();
         } catch (Exception ex) {
-            Logger.getLogger(FrmCuenta.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 

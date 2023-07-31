@@ -87,8 +87,6 @@ public class FrmRol extends javax.swing.JDialog {
 
         jLabel2.setText("Descripción:");
 
-        txtDescripcion.setText("jTextField1");
-
         jToggleButton1.setText("GUARDAR");
         jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

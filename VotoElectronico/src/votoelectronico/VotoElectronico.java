@@ -17,13 +17,5 @@ import modelo.Cuenta;
 public class VotoElectronico {
 
     public static void main(String[] args) throws VacioException, PosicionException, IOException {
-        CuentaDAO cuentaDAO = new CuentaDAO();
-/*
-        String username = "1103103584";
-        String contrasena = "prueba1";
-        cuentaDAO.guardar(username, contrasena);
-*/
-        Cuenta cuenta = cuentaDAO.getCuenta();
-        System.out.println("Cuenta guardada: " + cuenta.getUsername() + ", " + cuenta.getContrasena());
     }
 }

@@ -4,6 +4,7 @@
  */
 package vista.ModeloTabla;
 
+import Controlador.DAO.PersonaDAO;
 import Controlador.ed.lista.ListaEnlazada;
 import javax.swing.table.AbstractTableModel;
 import modelo.Cuenta;

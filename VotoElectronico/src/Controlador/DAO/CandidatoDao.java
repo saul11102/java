@@ -4,6 +4,7 @@
  */
 package Controlador.DAO;
 
+import Controlador.ed.lista.ListaEnlazada;
 import java.io.IOException;
 import modelo.Candidato;
 
@@ -41,5 +42,18 @@ public class CandidatoDao extends AdaptadorDAO<Candidato> {
 
     private Integer generateID() {
         return listar().size() + 1;
+    }
+    
+    public Candidato buscarPorId(Integer dato) throws Exception {
+        Candidato resultado = null;
+        ListaEnlazada<Candidato> lista = listar();
+        for (int i = 0; i < lista.size(); i++) {
+            Candidato aux = lista.get(i);
+            if (aux.getId().intValue() == dato.intValue()) {
+                resultado = aux;
+                break;
+            }
+        }
+        return resultado;
     }
 }

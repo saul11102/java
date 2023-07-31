@@ -181,12 +181,12 @@ public class FrmLogIn extends javax.swing.JDialog {
             
             try {
                 Persona persona = pd.buscarPorCedula(cedula);
-                Cuenta cuenta = cd.buscarPorId(persona.getId());
+                Cuenta cuenta = cd.buscarporId(persona.getId());
                 Rol rol = rd.buscarPorId(persona.getId_Rol());
                 if (contrasena.equalsIgnoreCase(cuenta.getContrasena())){
                     JOptionPane.showMessageDialog(null, "Bienvenido");
                     if (rol.getNombre().equalsIgnoreCase("Usuario")){
-                        new FrmPapeleta(null, true).setVisible(true);
+                        new FrmElegirPapeleta(null, true).setVisible(true);
                     } else {
                         new FrmGestionar(null, true).setVisible(true);
                     }

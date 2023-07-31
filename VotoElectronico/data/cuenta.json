@@ -4,26 +4,18 @@
             "info": {
                 "@class": "modelo.Cuenta",
                 "id": 1,
-                "username": 1104982572,
-                "contrasena": "prueba1"
+                "contrasena": "admin",
+                "id_Persona": 1
             },
             "sig": {
                 "info": {
                     "@class": "modelo.Cuenta",
                     "id": 2,
-                    "username": 1104982572,
-                    "contrasena": "prueba1"
-                },
-                "sig": {
-                    "info": {
-                        "@class": "modelo.Cuenta",
-                        "id": 3,
-                        "username": 1103103584,
-                        "contrasena": "prueba1"
-                    }
+                    "contrasena": 1130294382,
+                    "id_Persona": 2
                 }
             }
         },
-        "size": 3
+        "size": 2
     }
 }
