@@ -3,10 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package modelo;
-import Controlador.ed.lista.Exception.PosicionException;
-import Controlador.ed.lista.Exception.VacioException;
-import Controlador.ed.lista.ListaEnlazada;
-import java.util.Date;
+
 /**
  *
  * @author Kevin
@@ -40,10 +37,5 @@ public class Dignidad {
 
     public void setVigencia(String vigencia) {
         this.vigencia = vigencia;
-    }
-
-    
-
-    
-    
+    }   
 }

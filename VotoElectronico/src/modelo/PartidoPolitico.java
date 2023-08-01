@@ -4,9 +4,7 @@
  */
 package modelo;
 
-import Controlador.ed.lista.ListaEnlazada;
-
-/** 
+/**
  *
  * @author Kevin
  */
@@ -96,9 +94,5 @@ public class PartidoPolitico {
 
     public void setNroLista(Integer nroLista) {
         this.nroLista = nroLista;
-    }
-
-    
-    
+    }    
 }
-

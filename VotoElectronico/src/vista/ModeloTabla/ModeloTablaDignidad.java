@@ -64,6 +64,5 @@ public class ModeloTablaDignidad extends AbstractTableModel{
             default:
                 return null;
         }
-    }
-    
+    }   
 }

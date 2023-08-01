@@ -7,7 +7,6 @@ package Controlador.DAO;
 import Controlador.ed.lista.ListaEnlazada;
 import java.io.IOException;
 import modelo.PartidoPolitico;
-import modelo.PartidoPolitico;
 
 /**
  *

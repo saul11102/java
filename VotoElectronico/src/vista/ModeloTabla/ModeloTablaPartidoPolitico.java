@@ -78,6 +78,5 @@ public class ModeloTablaPartidoPolitico extends AbstractTableModel{
             default:
                 return null;
         }
-    }
-    
+    }  
 }
