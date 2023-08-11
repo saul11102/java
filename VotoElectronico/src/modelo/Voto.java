@@ -12,18 +12,20 @@ import java.util.Date;
  */
 public class Voto {
     private Integer id;
-    private Integer voto_Normal;
-    private Integer voto_Nulo;
-    private Integer voto_Blanco;
+    private TipoVoto tipo;
+    private String voto;
+    private Integer id_Seleccion;
+    private Integer dignidad;
 
     public Voto() {
     }
 
-    public Voto(Integer id, Integer voto_Normal, Integer voto_Nulo, Integer voto_Blanco) {
+    public Voto(Integer id, TipoVoto tipo, String voto, Integer id_Seleccion, Integer dignidad) {
         this.id = id;
-        this.voto_Normal = voto_Normal;
-        this.voto_Nulo = voto_Nulo;
-        this.voto_Blanco = voto_Blanco;
+        this.tipo = tipo;
+        this.voto = voto;
+        this.id_Seleccion = id_Seleccion;
+        this.dignidad = dignidad;
     }
 
     public Integer getId() {
@@ -34,29 +36,38 @@ public class Voto {
         this.id = id;
     }
 
-    public Integer getVoto_Normal() {
-        return voto_Normal;
+    public TipoVoto getTipo() {
+        return tipo;
     }
 
-    public void setVoto_Normal(Integer voto_Normal) {
-        this.voto_Normal = voto_Normal;
+    public void setTipo(TipoVoto tipo) {
+        this.tipo = tipo;
     }
 
-    public Integer getVoto_Nulo() {
-        return voto_Nulo;
+    public String getVoto() {
+        return voto;
     }
 
-    public void setVoto_Nulo(Integer voto_Nulo) {
-        this.voto_Nulo = voto_Nulo;
+    public void setVoto(String voto) {
+        this.voto = voto;
     }
 
-    public Integer getVoto_Blanco() {
-        return voto_Blanco;
+    public Integer getId_Seleccion() {
+        return id_Seleccion;
     }
 
-    public void setVoto_Blanco(Integer voto_Blanco) {
-        this.voto_Blanco = voto_Blanco;
+    public void setId_Seleccion(Integer id_Seleccion) {
+        this.id_Seleccion = id_Seleccion;
     }
 
-   
+    public Integer getDignidad() {
+        return dignidad;
+    }
+
+    public void setDignidad(Integer dignidad) {
+        this.dignidad = dignidad;
+    }
+    
+
+    
 }
