@@ -47,7 +47,7 @@ public class PersonaDAO extends AdaptadorDAO<Persona>{
     public Persona buscarPorCedula(String dato) throws Exception {
         Persona resultado = null;
         ListaEnlazada<Persona> lista = listar();
-        for (int i = 0; i < lista.size(); i++) {
+        for (int i = 0; i <= lista.size(); i++) {
             Persona aux = lista.get(i);
             if (aux.getCedula().toLowerCase().equals(dato.toLowerCase())) {
                 resultado = aux;
@@ -55,7 +55,7 @@ public class PersonaDAO extends AdaptadorDAO<Persona>{
             }
         }
         return resultado;
-    }
+    }   
     
     public Persona buscarPorId(Integer dato) throws Exception {
         Persona resultado = null;

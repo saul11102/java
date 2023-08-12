@@ -12,7 +12,7 @@ public class Persona {
     private Integer id;
     private String cedula;
     private String nombre;
-    private String apellido;
+    private String apellido;    
     private String direccion;
     private String correoElectronico;
     private String numeroTelefono;
@@ -104,6 +104,11 @@ public class Persona {
 
     public void setId_Rol(Integer id_Rol) {
         this.id_Rol = id_Rol;
+    }
+
+    @Override
+    public String toString() {
+        return apellido+ " "+nombre;
     }
 
     

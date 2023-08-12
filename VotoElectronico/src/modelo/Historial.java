@@ -12,14 +12,15 @@ import java.util.Date;
  * @author juanfer
  */
 public class Historial {
+
     private Integer id;
-    private String fecha;
+    private Date fecha;
     private Integer id_Cuenta;
 
     public Historial() {
     }
 
-    public Historial(Integer id, String fecha, Integer id_Cuenta) {
+    public Historial(Integer id, Date fecha, Integer id_Cuenta) {
         this.id = id;
         this.fecha = fecha;
         this.id_Cuenta = id_Cuenta;
@@ -33,11 +34,11 @@ public class Historial {
         this.id = id;
     }
 
-    public String getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
@@ -48,5 +49,5 @@ public class Historial {
     public void setId_Cuenta(Integer id_Cuenta) {
         this.id_Cuenta = id_Cuenta;
     }
-}
 
+}
