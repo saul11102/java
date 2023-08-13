@@ -43,7 +43,7 @@ public class FrmRol extends javax.swing.JInternalFrame {
         txtDescripcion.setText("");
         cargarTabla();
     }
-    private void guardar() {
+    private void guardar() throws Exception {
         if (txtDescripcion.getText().isEmpty() || txtNombre.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Ingrese todos los campos");
         } else {
@@ -181,7 +181,11 @@ public class FrmRol extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        guardar();
+        try {
+            guardar();
+        } catch (Exception ex) {
+            Logger.getLogger(FrmRol.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
 

@@ -5,7 +5,7 @@
 package vista.Voto;
 
 import vista.Frmcandidato;
-import vista.FrmCuentaI;
+import vista.FrmCuenta;
 import vista.Frmdignidad;
 import vista.Frmeleccion;
 import vista.FrmHistorial;
@@ -184,7 +184,7 @@ public class FrmGestionar extends javax.swing.JDialog {
     }//GEN-LAST:event_btnPersonasActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        FrmCuentaI v = new FrmCuentaI();
+        FrmCuenta v = new FrmCuenta();
         if (vp3.equalsIgnoreCase("0")) {
             ventana.addTab("Gestionar cuentas", v);
             ventana.setSelectedComponent(v);

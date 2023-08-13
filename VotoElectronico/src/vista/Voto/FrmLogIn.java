@@ -5,10 +5,14 @@
 package vista.Voto;
 
 import Controlador.DAO.CuentaDAO;
+import Controlador.DAO.HistorialDAO;
 import Controlador.DAO.PersonaDAO;
 import Controlador.DAO.RolDao;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import modelo.Cuenta;
+import modelo.Historial;
 import modelo.Persona;
 import modelo.Rol;
 
@@ -20,6 +24,7 @@ public class FrmLogIn extends javax.swing.JDialog {
     private CuentaDAO cd = new CuentaDAO();
     private PersonaDAO pd = new PersonaDAO();
     private RolDao rd = new RolDao();
+    private HistorialDAO hd = new HistorialDAO();
 
     /**
      * Creates new form FrmLogIn
@@ -173,31 +178,59 @@ public class FrmLogIn extends javax.swing.JDialog {
      * Método que valida las credenciales del usuario
      */
     private void validar() {
-        if (txtCedula.getText().isEmpty() || txtContrasena.getText().isEmpty()){
+        if (txtCedula.getText().isEmpty() || txtContrasena.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Ingrese todos los datos");
         } else {
             String cedula = txtCedula.getText().toString();
             String contrasena = txtContrasena.getText().toString();
-            
+
             try {
                 Persona persona = pd.buscarPorCedula(cedula);
+                if (persona == null) {
+                    JOptionPane.showMessageDialog(null, "Usuario no encontrado, ingrese correctamente su cedula");
+                    return;
+                }
+
                 Cuenta cuenta = cd.buscarporId(persona.getId());
                 Rol rol = rd.buscarPorId(persona.getId_Rol());
-                if (contrasena.equalsIgnoreCase(cuenta.getContrasena())){
-                    JOptionPane.showMessageDialog(null, "Bienvenido");
-                    if (rol.getNombre().equalsIgnoreCase("Usuario")){
-                        new FrmElegirPapeleta(null, true).setVisible(true);
+                System.out.println(rol.getNombre());
+                if (persona.getEstado() == 0) {
+                    if (contrasena.equalsIgnoreCase(cuenta.getContrasena())) {
+                        if (rol.getNombre().equalsIgnoreCase("Usuario")) {
+
+                            Historial h = new Historial();
+                            Date fechaActual = new Date();
+                            SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                            String fechaFormateada = formatoFecha.format(fechaActual);
+
+                            h.setFecha(fechaFormateada);
+                            h.setId_Cuenta(cuenta.getId()-1);
+
+                            hd.setHistorial(h);
+                            hd.guardar();
+
+                            System.out.println(persona.getNombre());
+                            
+                            JOptionPane.showMessageDialog(null, "Bienvenido al sistema de votación");
+
+                            new FrmPapeleta(null, true, persona).setVisible(true);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Bienvenido como administrador");
+
+                            new FrmGestionar(null, true).setVisible(true);
+
+                        }
                     } else {
-                        new FrmGestionar(null, true).setVisible(true);
+                        JOptionPane.showMessageDialog(null, "Contraseña no válida");
                     }
-                    
                 } else {
-                    JOptionPane.showMessageDialog(null, "Contraseña no válida");
+                    JOptionPane.showMessageDialog(null, "Usted ya ha realizado su voto");
                 }
+
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Usuario no encontrado, ingrese correctamente su cedula");
+                JOptionPane.showMessageDialog(null, "Error al validar usuario: " + e.getMessage());
+                System.out.println(e.getMessage());
             }
-            
         }
     }
 }
