@@ -12,7 +12,7 @@ import modelo.Candidato;
 import modelo.PartidoPolitico;
    
 /**
- *
+ * 
  * @author Kevin
  */
 public class PartidoPoliticoDao extends AdaptadorDAOBDD<PartidoPolitico> {
