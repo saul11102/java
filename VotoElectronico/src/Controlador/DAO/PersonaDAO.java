@@ -29,10 +29,20 @@ public class PersonaDAO extends AdaptadorDAOBDD<Persona>{
     public void setPersona(Persona persona) {
         this.persona = persona;
     }
+    /**
+     * guarda una persona dentro de la base de datos
+     * @throws IOException
+     * @throws Exception 
+     */
 
     public void guardar() throws IOException, Exception {
         this.guardar(persona);
     }
+     /**
+     * modifica dentro de la base de datos una persona
+     * @param pos
+     * @throws Exception 
+     */
 
     public void modificar(Integer pos) throws Exception {
         if (persona == null || persona.getId() == null) {
@@ -50,6 +60,12 @@ public class PersonaDAO extends AdaptadorDAOBDD<Persona>{
 
         this.modificar(aux);
     }
+    /**
+     * busca una persona de acuerdo su número de cédula
+     * @param dato
+     * @return
+     * @throws Exception 
+     */
 
     public Persona buscarPorCedula(String dato) throws Exception {
         Persona resultado = null;
@@ -63,6 +79,12 @@ public class PersonaDAO extends AdaptadorDAOBDD<Persona>{
         }
         return resultado;
     }   
+    /**
+     * busca una persona de acuerdo a su id
+     * @param dato
+     * @return
+     * @throws Exception 
+     */
     
     public Persona buscarPorId(Integer dato) throws Exception {
         Persona resultado = null;

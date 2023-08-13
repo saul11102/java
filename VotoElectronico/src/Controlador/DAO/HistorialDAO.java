@@ -31,10 +31,20 @@ public class HistorialDAO extends AdaptadorDAOBDD<Historial> {
     public void setHistorial(Historial historial) {
         this.historial = historial;
     }
+    /**
+     * guarda un historial dentro de la base
+     * @throws IOException
+     * @throws Exception 
+     */
 
     public void guardar() throws IOException, Exception {
         this.guardar(historial);
     }
+    /**
+     * modifica un historial dentro de la base
+     * @param pos
+     * @throws Exception 
+     */
 
     public void modificar(Integer pos) throws Exception {
         if (historial == null || historial.getId() == null) {

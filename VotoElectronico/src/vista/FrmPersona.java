@@ -232,7 +232,10 @@ public class FrmPersona extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Llamada al método guardar
+     * @param evt 
+     */
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         try {
             guardar();
@@ -263,7 +266,12 @@ public class FrmPersona extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
-private void guardar() throws Exception {
+
+    /**
+     * guarda una persona dentro de la base de datos
+     * @throws Exception 
+     */
+    private void guardar() throws Exception {
         if (txtApellido.getText().isEmpty() || txtCedula.getText().isEmpty() || txtCorreo.getText().isEmpty() || txtDireccion.getText().isEmpty() || txtNombre.getText().isEmpty() || txtTelefono.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Ingrese todos los campos");
         } else if (txtCedula.getText().length() != 10) {

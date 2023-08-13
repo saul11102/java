@@ -23,6 +23,9 @@ public class FrmHistorial extends javax.swing.JInternalFrame {
         initComponents();
         cargarTabla();
     }
+    /**
+     * Carga la tabla con los datos dentro de la base de datos
+     */
 
     public void cargarTabla() {
         modelo.setLista(hd.listar());
