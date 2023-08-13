@@ -4,7 +4,7 @@
  */
 package Controlador.DAO;
 
-import Controlador.DAO.AdaptadorDAO;
+import Controlador.DAO.AdaptadorDAOBDD;
 import Controlador.ed.lista.ListaEnlazada;
 import java.io.IOException;
 import modelo.Persona;
@@ -13,7 +13,7 @@ import modelo.Persona;
  *
  * @author Juan_fer
  */
-public class PersonaDAO extends AdaptadorDAO<Persona>{
+public class PersonaDAO extends AdaptadorDAOBDD<Persona>{
     private Persona persona;
 
     public PersonaDAO() {

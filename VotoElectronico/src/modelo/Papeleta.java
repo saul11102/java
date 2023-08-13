@@ -15,14 +15,14 @@ import java.util.Date;
 public class Papeleta {
     private Integer id;
     private String numeroPapeleta;
-    private Date fechaEmision;
+    private String fechaEmision;
     private Integer id_Persona;
     private Integer id_Eleccion;
 
     public Papeleta() {
     }
 
-    public Papeleta(Integer id, String numeroPapeleta, Date fechaEmision, Integer id_Persona, Integer id_Eleccion) {
+    public Papeleta(Integer id, String numeroPapeleta, String fechaEmision, Integer id_Persona, Integer id_Eleccion) {
         this.id = id;
         this.numeroPapeleta = numeroPapeleta;
         this.fechaEmision = fechaEmision;
@@ -46,11 +46,11 @@ public class Papeleta {
         this.numeroPapeleta = numeroPapeleta;
     }
 
-    public Date getFechaEmision() {
+    public String getFechaEmision() {
         return fechaEmision;
     }
 
-    public void setFechaEmision(Date fechaEmision) {
+    public void setFechaEmision(String fechaEmision) {
         this.fechaEmision = fechaEmision;
     }
 
@@ -69,8 +69,5 @@ public class Papeleta {
     public void setId_Eleccion(Integer id_Eleccion) {
         this.id_Eleccion = id_Eleccion;
     }
-
-    
-
     
 }

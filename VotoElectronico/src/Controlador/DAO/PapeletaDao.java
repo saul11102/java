@@ -6,6 +6,7 @@ package Controlador.DAO;
 
 import Controlador.ed.lista.Exception.PosicionException;
 import Controlador.ed.lista.Exception.VacioException;
+import Controlador.ed.lista.ListaEnlazada;
 import java.io.IOException;
 import java.security.Key;
 import java.util.Base64;
@@ -18,7 +19,7 @@ import modelo.Papeleta;
  *
  * @author caim2
  */
-public class PapeletaDao extends AdaptadorDAO<Papeleta>{
+public class PapeletaDao extends AdaptadorDAOBDD<Papeleta>{
     private Papeleta papeleta;
 
     public PapeletaDao() {
@@ -36,8 +37,7 @@ public class PapeletaDao extends AdaptadorDAO<Papeleta>{
         this.papeleta = papeleta;
     }
 
-    public void guardar(Integer id_Persona) throws IOException, VacioException, PosicionException {
-        papeleta.setId(generarId());
+    public void guardar(Integer id_Persona) throws IOException, VacioException, PosicionException, Exception {
         papeleta.setNumeroPapeleta(generarNumeroPapeleta());
         papeleta.setId_Persona(encriptarIdPersona(id_Persona));
         papeleta.setId_Eleccion(obtenerEleccion());
@@ -45,7 +45,20 @@ public class PapeletaDao extends AdaptadorDAO<Papeleta>{
     }
 
     public void modificar(Integer pos) throws Exception {
-        this.modificar(papeleta, pos);
+        if (papeleta == null || papeleta.getId() == null) {
+            throw new IllegalArgumentException("El partido político no está correctamente configurado para la modificación.");
+        }
+
+        ListaEnlazada<Papeleta> lista = listar();
+
+        if (pos < 0 || pos >= lista.size()) {
+            throw new IndexOutOfBoundsException("Posición inválida: " + pos);
+        }
+
+        Papeleta aux = lista.get(pos);
+
+        this.modificar(aux);
+
     }
 
     private Integer generateID() {
@@ -57,9 +70,9 @@ public class PapeletaDao extends AdaptadorDAO<Papeleta>{
     }
 
     private Integer encriptarIdPersona(Integer id_Persona) {
-        System.out.println("llega aqui");
         try {
-            Key key = new SecretKeySpec("GRUPO3CLAVE12345".getBytes("UTF-8"), "AES"); // GRUPO3CLAVE12345 clave para encriptar la contraseña
+            Key key = new SecretKeySpec("GRUPO3CLAVE12345".getBytes("UTF-8"), "AES");
+             // GRUPO3CLAVE12345 clave para encriptar la contraseña
             Cipher cipher = Cipher.getInstance("AES");
             cipher.init(Cipher.ENCRYPT_MODE, key);
             byte[] encryptedBytes = cipher.doFinal(id_Persona.toString().getBytes());
@@ -99,6 +112,7 @@ public class PapeletaDao extends AdaptadorDAO<Papeleta>{
 
     private Integer obtenerEleccion() throws VacioException, PosicionException {
         Eleccion e = new EleccionDao().obtenerEleccionActiva();
+        System.out.println("ID de Eleccion obtenida:  " + e.getId());
         return e.getId();
     }
 }

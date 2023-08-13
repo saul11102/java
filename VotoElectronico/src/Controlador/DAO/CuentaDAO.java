@@ -14,7 +14,7 @@ import modelo.Cuenta;
  *
  * @author santiago
  */
-public class CuentaDAO extends AdaptadorDAO<Cuenta> {
+public class CuentaDAO extends AdaptadorDAOBDD<Cuenta> {
 
     private Cuenta cuenta; 
     
@@ -33,13 +33,23 @@ public class CuentaDAO extends AdaptadorDAO<Cuenta> {
         this.cuenta = cuenta;
     }
 
-    public void guardar() throws IOException {
-        cuenta.setId(generarId());
+    public void guardar() throws IOException, Exception {
         this.guardar(cuenta);
     }
 
     public void modificar(Integer pos) throws Exception {
-        this.modificar(cuenta, pos);
+        if(cuenta == null || cuenta.getId() == null){
+            throw new IllegalArgumentException("El partido político no está correctamente configurado para la modificación.");
+        }
+        
+        ListaEnlazada<Cuenta> lista = listar();
+        
+        if(pos < 0 || pos >= lista.size()){
+            throw new IndexOutOfBoundsException("Posición inválida: " + pos);
+        }
+        
+        Cuenta aux = lista.get(pos);
+        this.modificar(aux);
     }
 
     private Integer generateID() {
@@ -58,7 +68,7 @@ public class CuentaDAO extends AdaptadorDAO<Cuenta> {
         ListaEnlazada<Cuenta> lista = listar();
         for (int i = 0; i < lista.size(); i++) {
             Cuenta aux = lista.get(i);
-            if (aux.getId().intValue() == dato.intValue()) {
+            if (aux.getId_Persona().intValue() == dato.intValue()) {
                 resultado = aux;
                 break;
             }
