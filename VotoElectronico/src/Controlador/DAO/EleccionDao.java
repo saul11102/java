@@ -33,54 +33,69 @@ public class EleccionDao extends AdaptadorDAOBDD<Eleccion> {
         this.eleccion = eleccion;
     }
 
+    /**
+     * guarda dentro de la base de datos a la elección
+     *
+     * @throws IOException
+     * @throws Exception
+     */
     public void guardar() throws IOException, Exception {
         this.guardar(eleccion);
     }
 
+    /**
+     * modifica la elección dentro de la base
+     *
+     * @param pos posición de la elección
+     * @throws Exception
+     */
     public void modificar(Integer pos) throws Exception {
         if (eleccion == null || eleccion.getId() == null) {
-            throw new IllegalArgumentException("El partido político no está correctamente configurado para la modificación.");
+            throw new IllegalArgumentException("La elección no está correctamente configurado para la modificación.");
         }
 
         ListaEnlazada<Eleccion> lista = listar();
 
-        if (pos < 0 || pos >= lista.size()) {
-            throw new IndexOutOfBoundsException("Posición inválida: " + pos);
-        }
-
         Eleccion aux = lista.get(pos);
-        
 
         this.modificar(aux);
     }
 
-    private Integer generateID() {
-        return listar().size() + 1;
-    }
-
-    public Eleccion buscarPorNombres(String dato) throws Exception{
+    /**
+     * busca una elección de acuerdo a su nombre
+     *
+     * @param dato nombre de la elección
+     * @return
+     * @throws Exception
+     */
+    public Eleccion buscarPorNombres(String dato) throws Exception {
         Eleccion resultado = null;
         ListaEnlazada<Eleccion> lista = listar();
         for (int i = 0; i < lista.size(); i++) {
             Eleccion aux = lista.get(i);
-            if (aux.getNombre().toLowerCase().equals(dato.toLowerCase())){
+            if (aux.getNombre().toLowerCase().equals(dato.toLowerCase())) {
                 resultado = aux;
                 break;
             }
         }
         return resultado;
     }
-    
-    public Eleccion obtenerEleccionActiva() throws VacioException, PosicionException{
+
+    /**
+     * Obtiene la elección activa de la base de datos
+     *
+     * @return eleccion activa
+     * @throws VacioException
+     * @throws PosicionException
+     */
+    public Eleccion obtenerEleccionActiva() throws VacioException, PosicionException {
         ListaEnlazada<Eleccion> lista = listar();
         for (int i = 0; i < lista.size(); i++) {
             Eleccion aux = lista.get(i);
-            if (aux.getEstado() ==  1) {
+            if (aux.getEstado() == 1) {
                 return aux;
             }
         }
         return null;
     }
 }
-
-

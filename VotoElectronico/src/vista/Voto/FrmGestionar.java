@@ -164,6 +164,10 @@ public class FrmGestionar extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * carga la vista de candidatos
+     * @param evt 
+     */
     private void btnCandidatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCandidatosActionPerformed
         Frmcandidato v = new Frmcandidato();
         if (vp1.equalsIgnoreCase("0")) {
@@ -174,6 +178,10 @@ public class FrmGestionar extends javax.swing.JDialog {
         vp1 = "1";  
     }//GEN-LAST:event_btnCandidatosActionPerformed
 
+    /**
+     * carga la vista de personas
+     * @param evt 
+     */
     private void btnPersonasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPersonasActionPerformed
         FrmPersona v = new FrmPersona();
         if (vp2.equalsIgnoreCase("0")) {
@@ -183,6 +191,10 @@ public class FrmGestionar extends javax.swing.JDialog {
         vp2 = "1"; 
     }//GEN-LAST:event_btnPersonasActionPerformed
 
+    /**
+     * carga la vista de cuentas
+     * @param evt 
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         FrmCuenta v = new FrmCuenta();
         if (vp3.equalsIgnoreCase("0")) {
@@ -192,6 +204,10 @@ public class FrmGestionar extends javax.swing.JDialog {
         vp3 = "1"; 
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    /**
+     * carga la vista de dignidad
+     * @param evt 
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         Frmdignidad v = new Frmdignidad();
         if (vp4.equalsIgnoreCase("0")) {
@@ -201,6 +217,10 @@ public class FrmGestionar extends javax.swing.JDialog {
         vp4 = "1"; 
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    /**
+     * carga la vista de elecciones
+     * @param evt 
+     */
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         Frmeleccion v = new Frmeleccion();
         if (vp5.equalsIgnoreCase("0")) {
@@ -210,6 +230,10 @@ public class FrmGestionar extends javax.swing.JDialog {
         vp5 = "1"; 
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    /**
+     * carga la vista de rol
+     * @param evt 
+     */
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         FrmRol v = new FrmRol();
         if (vp6.equalsIgnoreCase("0")) {
@@ -228,6 +252,10 @@ public class FrmGestionar extends javax.swing.JDialog {
         vp7 = "1"; 
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    /**
+     * carga la vista de historial
+     * @param evt 
+     */
     private void btnHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialActionPerformed
         FrmHistorial v = new FrmHistorial();
         if (vp8.equalsIgnoreCase("0")) {

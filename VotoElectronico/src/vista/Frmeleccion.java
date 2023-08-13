@@ -33,12 +33,18 @@ public class Frmeleccion extends javax.swing.JInternalFrame {
         limpiar();
     }
 
+    /**
+     * carga a la tabla las elecciones guardadas dentro de la base de datos
+     */
     public void cargarTabla() {
         modelo.setLista(ed.listar());
         tblEleccion.setModel(modelo);
         tblEleccion.updateUI();
     }
 
+    /**
+     * limpia los campos luego de hacer un registro
+     */
     public void limpiar() {
         txtNombre.setText("");
         txtUbicacion.setText("");
@@ -176,14 +182,18 @@ public class Frmeleccion extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * llama al método guardar
+     * @param Exception cuando no se puede guardar la elección dentro de la base 
+     */
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        
+
         try {
             guardar();
         } catch (Exception ex) {
-            Logger.getLogger(Frmeleccion.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-        
+            JOptionPane.showMessageDialog(null, "No se pudo guardar");
+        }
+
     }//GEN-LAST:event_btnGuardarActionPerformed
 
 
@@ -201,35 +211,46 @@ public class Frmeleccion extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtUbicacion;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * Guarda una elección dentro de la base de datos
+     *
+     * @throws IOException
+     * @throws VacioException
+     * @throws PosicionException
+     * @throws Exception
+     */
     private void guardar() throws IOException, VacioException, PosicionException, Exception {
         Boolean acceso = true;
-        
+
         ListaEnlazada<Eleccion> lista = ed.listar();
         for (int i = 0; i < lista.size(); i++) {
             Eleccion aux = lista.get(i);
-            if(aux.getEstado() == 1){
+            if (aux.getEstado() == 1) {
                 acceso = false;
             }
         }
-         
-        if (!txtNombre.getText().isEmpty() && !txtUbicacion.getText().isEmpty() && acceso) {
-            ed.getEleccion().setNombre(txtNombre.getText().toString());
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            ed.getEleccion().setFecha(format.format(dateFecha.getDate()));
-            ed.getEleccion().setUbicacion(txtUbicacion.getText().toString());
-            if (cbxEstado.getSelectedItem().toString().equalsIgnoreCase("Activo")) {
-                ed.getEleccion().setEstado(1);
-            } else{
-                ed.getEleccion().setEstado(0);
+
+        if (!txtNombre.getText().isEmpty() && !txtUbicacion.getText().isEmpty()) {
+            if (!acceso && !cbxEstado.getSelectedItem().toString().equalsIgnoreCase("No activo")) {
+                JOptionPane.showMessageDialog(null, "Solo puede existir una elección activa a la vez");
+            } else {
+                ed.getEleccion().setNombre(txtNombre.getText().toString());
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                ed.getEleccion().setFecha(format.format(dateFecha.getDate()));
+                ed.getEleccion().setUbicacion(txtUbicacion.getText().toString());
+                if (cbxEstado.getSelectedItem().toString().equalsIgnoreCase("Activo")) {
+                    ed.getEleccion().setEstado(1);
+                } else {
+                    ed.getEleccion().setEstado(0);
+                }
+                ed.guardar();
+                limpiar();
+                JOptionPane.showMessageDialog(null, "Eleccion guardada correctamente");
             }
-            ed.guardar();
-            JOptionPane.showMessageDialog(null, "Eleccion guardada correctamente");
-            
-        } else if (!acceso){
-            JOptionPane.showMessageDialog(null, "Solo puede existir una elección activa a la vez");
-        } else{
+        } else {
             JOptionPane.showMessageDialog(null, "Ingrese los datos");
         }
-        limpiar();
+
     }
 }

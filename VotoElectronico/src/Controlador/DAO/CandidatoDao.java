@@ -33,28 +33,41 @@ public class CandidatoDao extends AdaptadorDAOBDD<Candidato> {
         this.candidato = candidato;
     }
 
+    /**
+     * guarda dentro de la base al candidato
+     *
+     * @throws IOException
+     * @throws Exception
+     */
     public void guardar() throws IOException, Exception {
         this.guardar(candidato);
     }
 
+    /**
+     * Modifica un candidato dentro de la base de datos
+     *
+     * @param pos
+     * @throws Exception
+     */
     public void modificar(Integer pos) throws Exception {
         if (candidato == null || candidato.getId() == null) {
-            throw new IllegalArgumentException("El partido político no está correctamente configurado para la modificación.");
+            throw new IllegalArgumentException("El candidato no está correctamente configurado para la modificación.");
         }
 
         ListaEnlazada<Candidato> lista = listar();
 
-        if (pos < 0 || pos >= lista.size()) {
-            throw new IndexOutOfBoundsException("Posición inválida: " + pos);
-        }
-
         Candidato aux = lista.get(pos);
-        
-        
 
         this.modificar(aux);
     }
 
+    /**
+     * Busca un candidato por su id
+     *
+     * @param dato
+     * @return
+     * @throws Exception
+     */
     public Candidato buscarPorId(Integer dato) throws Exception {
         Candidato resultado = null;
         ListaEnlazada<Candidato> lista = listar();
@@ -68,6 +81,14 @@ public class CandidatoDao extends AdaptadorDAOBDD<Candidato> {
         return resultado;
     }
 
+    /**
+     * busca un candidato de acuerdo a la dignidad que pertenece
+     *
+     * @param id_dignidad
+     * @return
+     * @throws VacioException
+     * @throws PosicionException
+     */
     public ListaEnlazada<Candidato> buscarPorDignidad(Integer id_dignidad) throws VacioException, PosicionException {
         ListaEnlazada<Candidato> lista = new ListaEnlazada<>();
         ListaEnlazada<Candidato> listado = listar();
@@ -80,6 +101,16 @@ public class CandidatoDao extends AdaptadorDAOBDD<Candidato> {
         return lista;
     }
 
+    /**
+     * Busca un candidato de acuerdo a su dignidad y partido político al que
+     * pertenece
+     *
+     * @param id_Dignidad
+     * @param id_partidoPolitico
+     * @return
+     * @throws VacioException
+     * @throws PosicionException
+     */
     public ListaEnlazada<Candidato> buscarPorDignidadPartido(Integer id_Dignidad, Integer id_partidoPolitico) throws VacioException, PosicionException {
         ListaEnlazada<Candidato> lista = new ListaEnlazada<>();
         ListaEnlazada<Candidato> listado = listar();

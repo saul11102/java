@@ -19,27 +19,35 @@ import vista.Utilidades.CargarCombo;
  * @author alejandro
  */
 public class Frmcandidato extends javax.swing.JInternalFrame {
+
     private ModeloTablaCandidato modelo = new ModeloTablaCandidato();
     private CandidatoDao cd = new CandidatoDao();
     private DignidadDao dd = new DignidadDao();
     private PartidoPoliticoDao ppd = new PartidoPoliticoDao();
     private PersonaDAO pd = new PersonaDAO();
     private Persona persona = new Persona();
+
     /**
      * Creates new form Frmcandidato
      */
     public Frmcandidato() {
         initComponents();
-    limpiar();
+        limpiar();
     }
 
+    /**
+     * Cargar datos dentro de la tabla de candidatos
+     */
     public void cargarTabla() {
         modelo.setLista(cd.listar());
         tblCandidatos.setModel(modelo);
         tblCandidatos.updateUI();
     }
-    
-    public void limpiar(){
+
+    /**
+     * limpiar archivos luego de que se haga algún registro
+     */
+    public void limpiar() {
         txtNombre.setText("");
         txtFoto.setText("");
         txtCedula.setText("");
@@ -48,7 +56,11 @@ public class Frmcandidato extends javax.swing.JInternalFrame {
         cargarTabla();
         cargarCombo();
     }
-    
+
+    /**
+     * Cargar los combos del partido y la dignidad existentes en la base de
+     * datos
+     */
     private void cargarCombo() {
         try {
             CargarCombo.cargarPartidoPolitico(cbxPartido, ppd);
@@ -231,7 +243,11 @@ public class Frmcandidato extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * método para enviar a guardar un nuevo candidato
+     *
+     * @param Exceotion cuando no se pudo guardar al candidato
+     */
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         try {
             guardar();
@@ -239,9 +255,18 @@ public class Frmcandidato extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, ex);
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
-
+    /**
+     * Llama al método buscar
+     *
+     * @param evt
+     */
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        buscar();
+        try {
+            buscar();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se encontró a la persona");
+            System.out.println(e.getMessage());
+        }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
 
@@ -264,41 +289,34 @@ public class Frmcandidato extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtFoto;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
-    private void guardar() throws Exception{
-        if(!txtNombre.getText().isEmpty()){
+/**
+     * método que guarda un candidato dentro de lam base de datos
+     *
+     */
+    private void guardar() throws Exception {
+        if (!txtNombre.getText().isEmpty()) {
             Candidato c = new Candidato();
             c.setFoto(txtFoto.getText().toString());
-            System.out.println(c.getFoto()); 
-           c.setId_Persona(persona.getId());
-            System.out.println(persona.getNombre());
-            
+            c.setId_Persona(persona.getId());
             c.setId_Dignidad(dd.buscarPorNombres(cbxDignidad.getSelectedItem().toString()).getId());
-            System.out.println(dd.buscarPorNombres(cbxDignidad.getSelectedItem().toString()).getNombre());
-            
             c.setId_PartidoPolitico(ppd.buscarPorNombres(cbxPartido.getSelectedItem().toString()).getId());
-            System.out.println(ppd.buscarPorNombres(cbxPartido.getSelectedItem().toString()).getNombre());
-            
-            
+
             cd.setCandidato(c);
             cd.guardar();
-            System.out.println("llega aqui");
             JOptionPane.showMessageDialog(null, "Candidato Guardado");
-        }
-        else{
-            JOptionPane.showMessageDialog(null, "Ingrese los datos");
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingrese una cédula válida");
         }
         limpiar();
     }
 
-    private void buscar() {
-        try {
-            this.persona = pd.buscarPorCedula(txtCedula.getText().toString());
-            txtNombre.setText(persona.getNombre());
-            txtApellido.setText(persona.getApellido());
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Persona no encontrada");
-            System.out.println(ex.getMessage());
-        }
-            
+    /**
+     * Busca una persona con el número de cédula
+     */
+    private void buscar() throws Exception {
+        this.persona = pd.buscarPorCedula(txtCedula.getText().toString());
+        txtNombre.setText(persona.getNombre());
+        txtApellido.setText(persona.getApellido());
+
     }
 }
