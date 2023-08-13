@@ -21,7 +21,7 @@ import modelo.Voto;
  *
  * @author jostin
  */
-public class VotoDAO extends AdaptadorDAO<Voto> {
+public class VotoDAO extends AdaptadorDAOBDD<Voto> {
 
     private Voto voto;
 
@@ -40,35 +40,49 @@ public class VotoDAO extends AdaptadorDAO<Voto> {
         this.voto = voto;
     }
 
-    public void guardar() throws IOException {
-        voto.setId(generarId());
+    public void guardar() throws IOException, Exception {
         this.guardar(voto);
     }
 
     public void modificar(Integer pos) throws Exception {
-        this.modificar(voto, pos);
+        if (voto == null || voto.getId() == null) {
+            throw new IllegalArgumentException("El partido político no está correctamente configurado para la modificación.");
+        }
+
+        ListaEnlazada<Voto> lista = listar();
+
+        if (pos < 0 || pos >= lista.size()) {
+            throw new IndexOutOfBoundsException("Posición inválida: " + pos);
+        }
+
+        Voto aux = lista.get(pos);
+        
+
+        this.modificar(aux);
     }
+
 
     private Integer generateID() {
         return listar().size() + 1;
     }
-    public ListaEnlazada<Voto> listaVotoGuardar(HashMap<Integer, String> mapa) throws VacioException, PosicionException {
+    public ListaEnlazada<Voto> listaVotoGuardar(HashMap<Integer, String> mapa) throws VacioException, PosicionException, Exception {
         ListaEnlazada<Voto> lista = new ListaEnlazada<>();
+        ListaEnlazada<TipoVoto> tipos = new TipoVotoDao().listar();
         for (Map.Entry<Integer, String> set : mapa.entrySet()) {
             Eleccion e = new EleccionDao().obtenerEleccionActiva();
             Dignidad d = new DignidadDao().obtener(set.getKey());
             Voto v = new Voto();
             v.setDignidad(d.getId());
             v.setVoto(set.getValue());
-            v.setId_Seleccion(e.getId());
+            v.setId_Eleccion(e.getId());
             if (set.getValue().equalsIgnoreCase("")) {
-                v.setTipo(TipoVoto.BLANCO);
+                v.setId_tipoVoto(new TipoVotoDao().buscarPorTipoVoto("Blanco").getId());
             } else {
                 String aux[] = set.getValue().split(";");
                 if (aux.length <= d.getNro()) {
-                    v.setTipo(TipoVoto.VALIDO);
+                    v.setId_tipoVoto(new TipoVotoDao().buscarPorTipoVoto("Valido").getId());
                 } else {
-                    v.setTipo(TipoVoto.NULO);
+                    v.setId_tipoVoto(new TipoVotoDao().buscarPorTipoVoto("Nulo").getId());
                 }
             }
             lista.insertarNodo(v);
@@ -77,11 +91,10 @@ public class VotoDAO extends AdaptadorDAO<Voto> {
 
     }
 
-    public void votar(ListaEnlazada<Voto> listaVotoGuardar) throws VacioException, PosicionException, IOException {
+    public void votar(ListaEnlazada<Voto> listaVotoGuardar) throws VacioException, PosicionException, IOException, Exception {
         try {
             for (int i = 0; i < listaVotoGuardar.size(); i++) {
                 Voto voto = listaVotoGuardar.get(i);
-                voto.setId(generarId()); // Asignar un nuevo ID al voto antes de guardarlo (si es necesario)
                 guardar(voto); // Guardar cada voto en la base de datos
             }
         } catch (IOException e) {

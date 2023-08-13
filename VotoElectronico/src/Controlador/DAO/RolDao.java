@@ -12,7 +12,7 @@ import modelo.Rol;
  *
  * @author jostin
  */
-public class RolDao extends AdaptadorDAO<Rol> {
+public class RolDao extends AdaptadorDAOBDD<Rol> {
 
     private Rol rol;
 
@@ -31,17 +31,24 @@ public class RolDao extends AdaptadorDAO<Rol> {
         this.rol = rol;
     }
 
-    public void guardar() throws IOException {
-        rol.setId(generarId());
+    public void guardar() throws IOException, Exception {
         this.guardar(rol);
     }
 
     public void modificar(Integer pos) throws Exception {
-        this.modificar(rol, pos);
-    }
+        if (rol == null || rol.getId() == null) {
+            throw new IllegalArgumentException("El partido político no está correctamente configurado para la modificación.");
+        }
 
-    private Integer generateID() {
-        return listar().size() + 1;
+        ListaEnlazada<Rol> lista = listar();
+
+        if (pos < 0 || pos >= lista.size()) {
+            throw new IndexOutOfBoundsException("Posición inválida: " + pos);
+        }
+
+        Rol aux = lista.get(pos);
+
+        this.modificar(aux);
     }
 
     public Rol buscarPorRol(String dato) throws Exception {

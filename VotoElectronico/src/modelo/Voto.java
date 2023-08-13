@@ -12,19 +12,19 @@ import java.util.Date;
  */
 public class Voto {
     private Integer id;
-    private TipoVoto tipo;
+    private Integer id_tipoVoto;
     private String voto;
-    private Integer id_Seleccion;
+    private Integer id_Eleccion;
     private Integer dignidad;
 
     public Voto() {
     }
 
-    public Voto(Integer id, TipoVoto tipo, String voto, Integer id_Seleccion, Integer dignidad) {
+    public Voto(Integer id, Integer id_tipoVoto, String voto, Integer id_Eleccion, Integer dignidad) {
         this.id = id;
-        this.tipo = tipo;
+        this.id_tipoVoto = id_tipoVoto;
         this.voto = voto;
-        this.id_Seleccion = id_Seleccion;
+        this.id_Eleccion = id_Eleccion;
         this.dignidad = dignidad;
     }
 
@@ -36,12 +36,12 @@ public class Voto {
         this.id = id;
     }
 
-    public TipoVoto getTipo() {
-        return tipo;
+    public Integer getId_tipoVoto() {
+        return id_tipoVoto;
     }
 
-    public void setTipo(TipoVoto tipo) {
-        this.tipo = tipo;
+    public void setId_tipoVoto(Integer id_tipoVoto) {
+        this.id_tipoVoto = id_tipoVoto;
     }
 
     public String getVoto() {
@@ -52,12 +52,12 @@ public class Voto {
         this.voto = voto;
     }
 
-    public Integer getId_Seleccion() {
-        return id_Seleccion;
+    public Integer getId_Eleccion() {
+        return id_Eleccion;
     }
 
-    public void setId_Seleccion(Integer id_Seleccion) {
-        this.id_Seleccion = id_Seleccion;
+    public void setId_Eleccion(Integer id_Eleccion) {
+        this.id_Eleccion = id_Eleccion;
     }
 
     public Integer getDignidad() {
@@ -67,6 +67,7 @@ public class Voto {
     public void setDignidad(Integer dignidad) {
         this.dignidad = dignidad;
     }
+
     
 
     
