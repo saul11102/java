@@ -63,11 +63,13 @@ public class PapeletaDao extends AdaptadorDAOBDD<Papeleta> {
      */
     public void modificar(Integer pos) throws Exception {
         if (papeleta == null || papeleta.getId() == null) {
-            throw new IllegalArgumentException("El partido político no está correctamente configurado para la modificación.");
+            throw new IllegalArgumentException("La papeleta no está correctamente configurado para la modificación.");
         }
 
         ListaEnlazada<Papeleta> lista = listar();
+
         Papeleta aux = lista.get(pos);
+
         this.modificar(aux);
 
     }
