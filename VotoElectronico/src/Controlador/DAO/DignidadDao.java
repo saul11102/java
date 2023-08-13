@@ -31,20 +31,26 @@ public class DignidadDao extends AdaptadorDAOBDD<Dignidad> {
         this.dignidad = dignidad;
     }
 
+    /**
+     * guarda dentro de la base a la dignidad
+     * @throws IOException
+     * @throws Exception 
+     */
     public void guardar() throws IOException, Exception {
         this.guardar(dignidad);
     }
 
+    /**
+     * modifica una dignidad dentro de la base
+     * @param pos
+     * @throws Exception 
+     */
     public void modificar(Integer pos) throws Exception {
         if (dignidad == null || dignidad.getId() == null) {
-            throw new IllegalArgumentException("El partido político no está correctamente configurado para la modificación.");
+            throw new IllegalArgumentException("La dignidad no está correctamente configurado para la modificación.");
         }
 
         ListaEnlazada<Dignidad> lista = listar();
-
-        if (pos < 0 || pos >= lista.size()) {
-            throw new IndexOutOfBoundsException("Posición inválida: " + pos);
-        }
 
         Dignidad aux = lista.get(pos);
         
@@ -52,10 +58,12 @@ public class DignidadDao extends AdaptadorDAOBDD<Dignidad> {
         this.modificar(aux);
     }
 
-    private Integer generateID() {
-        return listar().size() + 1;
-    }
-
+    /**
+     * busca una dignidad de acuerdo a su nombre
+     * @param dato nombre de la dignidad
+     * @return
+     * @throws Exception 
+     */
     public Dignidad buscarPorNombres(String dato) throws Exception{
         Dignidad resultado = null;
         ListaEnlazada<Dignidad> lista = listar();

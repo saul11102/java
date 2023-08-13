@@ -219,7 +219,12 @@ public class FrmpartidoPolitico extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        guardar();
+        try {
+            guardar();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se pudo guardar");
+            System.out.println(e.getMessage());
+        }
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
 
@@ -246,24 +251,21 @@ public class FrmpartidoPolitico extends javax.swing.JInternalFrame {
     /**
      * guardar dentro del archivo al partido político
      */
-    private void guardar() {
+    private void guardar() throws Exception {
         if (txtLider.getText().isEmpty() || txtLinkFoto.getText().isEmpty() || txtNombre.getText().isEmpty() || txtSede.getText().isEmpty() || txtSiglas.getText().isEmpty() || txtSlogan.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Ingrese todos los datos");
         } else {
-            try {
-                ppd.getPartidoPolitico().setFoto(txtLinkFoto.getText().toString());
-                ppd.getPartidoPolitico().setLider(txtLider.getText().toString());
-                ppd.getPartidoPolitico().setNombre(txtNombre.getText().toString());
-                ppd.getPartidoPolitico().setSede(txtSede.getText().toString());
-                ppd.getPartidoPolitico().setSiglas(txtSiglas.getText().toString());
-                ppd.getPartidoPolitico().setSlogan(txtSlogan.getText().toString());
-                ppd.getPartidoPolitico().setNroLista((Integer) spnLista.getValue());
-                ppd.guardar();
-                JOptionPane.showMessageDialog(null, "Guardado Correctamente");
-            } catch (Exception ex) {
-                Logger.getLogger(FrmpartidoPolitico.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            ppd.getPartidoPolitico().setFoto(txtLinkFoto.getText().toString());
+            ppd.getPartidoPolitico().setLider(txtLider.getText().toString());
+            ppd.getPartidoPolitico().setNombre(txtNombre.getText().toString());
+            ppd.getPartidoPolitico().setSede(txtSede.getText().toString());
+            ppd.getPartidoPolitico().setSiglas(txtSiglas.getText().toString());
+            ppd.getPartidoPolitico().setSlogan(txtSlogan.getText().toString());
+            ppd.getPartidoPolitico().setNroLista((Integer) spnLista.getValue());
+            ppd.guardar();
+            limpiar();
+            JOptionPane.showMessageDialog(null, "Guardado Correctamente");
         }
-        limpiar();
+        
     }
 }

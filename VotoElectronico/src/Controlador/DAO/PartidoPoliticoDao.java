@@ -34,10 +34,20 @@ public class PartidoPoliticoDao extends AdaptadorDAOBDD<PartidoPolitico> {
         this.partidoPolitico = partidoPolitico;
     }
 
+    /**
+     * guardar un partido político dentro de la base de datos
+     * @throws IOException
+     * @throws Exception 
+     */
     public void guardar() throws IOException, Exception {
         this.guardar(partidoPolitico);
     }
 
+    /**
+     * modifica un partido político dentro de la base de datos
+     * @param pos
+     * @throws Exception 
+     */
     public void modificar(Integer pos) throws Exception {
         if (partidoPolitico == null || partidoPolitico.getId() == null) {
             throw new IllegalArgumentException("El partido político no está correctamente configurado para la modificación.");
@@ -45,9 +55,6 @@ public class PartidoPoliticoDao extends AdaptadorDAOBDD<PartidoPolitico> {
 
         ListaEnlazada<PartidoPolitico> lista = listar();
 
-        if (pos < 0 || pos >= lista.size()) {
-            throw new IndexOutOfBoundsException("Posición inválida: " + pos);
-        }
 
         PartidoPolitico aux = lista.get(pos);
         aux.setNombre(partidoPolitico.getNombre());
@@ -62,7 +69,12 @@ public class PartidoPoliticoDao extends AdaptadorDAOBDD<PartidoPolitico> {
         this.modificar(aux);
     }
 
-
+    /**
+     * busca un partido político por su nombre
+     * @param dato nombre del partido político
+     * @return
+     * @throws Exception 
+     */
     public PartidoPolitico buscarPorNombres(String dato) throws Exception {
         PartidoPolitico resultado = null;
         ListaEnlazada<PartidoPolitico> lista = listar();
@@ -76,6 +88,12 @@ public class PartidoPoliticoDao extends AdaptadorDAOBDD<PartidoPolitico> {
         return resultado;
     }
 
+    /**
+     * busca un partido político por su id
+     * @param dato id del partido político
+     * @return
+     * @throws Exception 
+     */
     public PartidoPolitico buscarPorId(Integer dato) throws Exception {
         PartidoPolitico resultado = null;
         ListaEnlazada<PartidoPolitico> lista = listar();
@@ -89,6 +107,13 @@ public class PartidoPoliticoDao extends AdaptadorDAOBDD<PartidoPolitico> {
         return resultado;
     }
 
+    /**
+     * lista los partidos políticos de acuerdo a la dignidad del candidato
+     * @param id_dignidad
+     * @return lista de partidos políticos 
+     * @throws VacioException
+     * @throws PosicionException 
+     */
     public ListaEnlazada<PartidoPolitico> listaPartidosDignidad(Integer id_dignidad) throws VacioException, PosicionException {
         ListaEnlazada<PartidoPolitico> lista = new ListaEnlazada<>();
         ListaEnlazada<Candidato> listaC = new CandidatoDao().listar();
@@ -103,6 +128,14 @@ public class PartidoPoliticoDao extends AdaptadorDAOBDD<PartidoPolitico> {
         return lista;
     }
 
+    /**
+     * metodo que dice si un partido político está en la lista de partidos políticoss guardados en la base
+     * @param id_PartidoPolitico
+     * @param lista
+     * @return true si está, false si no lo está
+     * @throws VacioException
+     * @throws PosicionException 
+     */
     private boolean estaLista(Integer id_PartidoPolitico, ListaEnlazada<PartidoPolitico> lista) throws VacioException, PosicionException {
         for (int i = 0; i < lista.size(); i++) {
             if (lista.get(i).getId().intValue() == id_PartidoPolitico.intValue()) {

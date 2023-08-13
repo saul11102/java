@@ -39,10 +39,11 @@ public class Frmdignidad extends javax.swing.JInternalFrame {
     }
 
     /**
-     * limpiar las elecciones de los txt y cargar la tabla
+     * limpiar las elecciones y cargar la tabla
      */
     public void limpiar() {
         txtNombre.setText("");
+        cbxEstado.setSelectedItem(0);
         cargarTabla();
     }
 
@@ -177,8 +178,17 @@ public class Frmdignidad extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Llama al método guardar
+     *
+     * @param evt
+     */
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        guardar();
+        try {
+            guardar();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
 
@@ -196,30 +206,27 @@ public class Frmdignidad extends javax.swing.JInternalFrame {
     private javax.swing.JTable tblDignidad;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
-    
+
     /**
-     * guardar dentro del archivo a la dignidad
+     * guardar dentro de la base de datos a la dignidad
      */
-    private void guardar() {
-        if (txtNombre.getText().isEmpty()) {
+    private void guardar() throws Exception {
+        if (txtNombre.getText().isEmpty() || ((Integer) spnNro.getValue()) == 0) {
             JOptionPane.showMessageDialog(null, "Ingrese todos los datos");
         } else {
-            try {
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                dd.getDignidad().setVigencia(format.format(dateVigencia.getDate()));
-                dd.getDignidad().setNombre(txtNombre.getText().toString());
-                if (cbxEstado.getSelectedItem().toString().equalsIgnoreCase("Activo")) {
-                    dd.getDignidad().setEstado(1);
-                } else {
-                    dd.getDignidad().setEstado(0);
-                }
-                dd.getDignidad().setNro((Integer) spnNro.getValue());
-                dd.guardar();
-                JOptionPane.showMessageDialog(null, "Dignidad Guardada");
-                limpiar();
-            } catch (Exception ex) {
-                Logger.getLogger(Frmdignidad.class.getName()).log(Level.SEVERE, null, ex);
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            dd.getDignidad().setVigencia(format.format(dateVigencia.getDate()));
+            dd.getDignidad().setNombre(txtNombre.getText().toString());
+            if (cbxEstado.getSelectedItem().toString().equalsIgnoreCase("Activo")) {
+                dd.getDignidad().setEstado(1);
+            } else {
+                dd.getDignidad().setEstado(0);
             }
+            dd.getDignidad().setNro((Integer) spnNro.getValue());
+            dd.guardar();
+            JOptionPane.showMessageDialog(null, "Dignidad Guardada");
+            limpiar();
+
         }
     }
 }
