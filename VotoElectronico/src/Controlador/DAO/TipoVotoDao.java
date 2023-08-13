@@ -29,11 +29,20 @@ public class TipoVotoDao extends AdaptadorDAOBDD<TipoVoto>{
     public void setTipoVoto(TipoVoto tipoVoto) {
         this.tipoVoto = tipoVoto;
     }
-
+    
+    /**
+     * Método para guardar el tipo de voto dentro de la base de datos
+     * @throws Exception 
+     */
     public void guardar() throws Exception {
         this.guardar(tipoVoto);
     }
-
+    
+    /**
+     * método para modificar un tipo de voto dentro de la base de datos
+     * @param pos
+     * @throws Exception 
+     */
     public void modificar(Integer pos) throws Exception {
         if (tipoVoto == null || tipoVoto.getId() == null) {
             throw new IllegalArgumentException("El partido político no está correctamente configurado para la modificación.");
@@ -50,7 +59,13 @@ public class TipoVotoDao extends AdaptadorDAOBDD<TipoVoto>{
 
         this.modificar(aux);
     }
-
+    
+    /**
+     * busca el tipo de voto por medio de su nombre
+     * @param dato nombre del tipo de voto
+     * @return
+     * @throws Exception 
+     */
     public TipoVoto buscarPorTipoVoto(String dato) throws Exception {
         TipoVoto resultado = null;
         ListaEnlazada<TipoVoto> lista = listar();
@@ -63,7 +78,13 @@ public class TipoVotoDao extends AdaptadorDAOBDD<TipoVoto>{
         }
         return resultado;
     }
-
+    
+    /**
+     * método para buscar un tipo de voto por su id
+     * @param dato id del tipo de voto
+     * @return
+     * @throws Exception 
+     */
     public TipoVoto buscarPorId(Integer dato) throws Exception {
         TipoVoto resultado = null;
         ListaEnlazada<TipoVoto> lista = listar();

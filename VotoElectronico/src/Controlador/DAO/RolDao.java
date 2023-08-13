@@ -30,11 +30,21 @@ public class RolDao extends AdaptadorDAOBDD<Rol> {
     public void setRol(Rol rol) {
         this.rol = rol;
     }
-
+    
+    /**
+     * guarda un rol dentro de la base de datos
+     * @throws IOException
+     * @throws Exception 
+     */
     public void guardar() throws IOException, Exception {
         this.guardar(rol);
     }
-
+    
+    /**
+     * modifica un rol dentro de la base de datos
+     * @param pos
+     * @throws Exception 
+     */
     public void modificar(Integer pos) throws Exception {
         if (rol == null || rol.getId() == null) {
             throw new IllegalArgumentException("El partido político no está correctamente configurado para la modificación.");
@@ -50,7 +60,13 @@ public class RolDao extends AdaptadorDAOBDD<Rol> {
 
         this.modificar(aux);
     }
-
+    
+    /**
+     * busca un rol de acuerdo al nombre 
+     * @param dato nombre del rol a buscar
+     * @return
+     * @throws Exception 
+     */
     public Rol buscarPorRol(String dato) throws Exception {
         Rol resultado = null;
         ListaEnlazada<Rol> lista = listar();
@@ -63,7 +79,13 @@ public class RolDao extends AdaptadorDAOBDD<Rol> {
         }
         return resultado;
     }
-
+    
+    /**
+     * busca un rol de acuerdo a su id
+     * @param dato id del rol
+     * @return
+     * @throws Exception 
+     */
     public Rol buscarPorId(Integer dato) throws Exception {
         Rol resultado = null;
         ListaEnlazada<Rol> lista = listar();
