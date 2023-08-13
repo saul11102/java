@@ -10,7 +10,7 @@ import Controlador.ed.lista.ListaEnlazada;
 import java.io.IOException;
 import modelo.Candidato;
 import modelo.PartidoPolitico;
-
+ 
 /**
  *
  * @author Kevin
