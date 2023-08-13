@@ -4,18 +4,29 @@
  */
 package vista.Voto;
 
-import vista.FrmCandidato;
-import vista.FrmCuenta;
-import vista.FrmDignidad;
-import vista.FrmPartidoPolitico;
-import vista.FrmPersona;
-import vista.FrmRol;
+import vista.Frmcandidato;
+import vista.Frmcuenta;
+import vista.Frmdignidad;
+import vista.Frmeleccion;
+import vista.Frmhistorial;
+import vista.FrmpartidoPolitico;
+import vista.Frmpersona;
+import vista.Frmrol;
 
 /**
  *
  * @author alejandro
  */
 public class FrmGestionar extends javax.swing.JDialog {
+    
+    public String vp1 = "0";
+    public String vp2 = "0";
+    public String vp3 = "0";
+    public String vp4 = "0";
+    public String vp5 = "0";
+    public String vp6 = "0";
+    public String vp7 = "0";
+    public String vp8 = "0";
 
     /**
      * Creates new form FrmGestionar
@@ -35,92 +46,75 @@ public class FrmGestionar extends javax.swing.JDialog {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        jPanel1 = new javax.swing.JPanel();
-        jToggleButton1 = new javax.swing.JToggleButton();
-        jToggleButton2 = new javax.swing.JToggleButton();
+        btnCandidatos = new javax.swing.JToggleButton();
+        ventana = new javax.swing.JTabbedPane();
+        btnPersonas = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        jToggleButton3 = new javax.swing.JToggleButton();
-        jToggleButton4 = new javax.swing.JToggleButton();
-        jToggleButton5 = new javax.swing.JToggleButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        btnHistorial = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Gestionar"));
-
-        jToggleButton1.setText("GESTIONAR CANDIDATOS");
-        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnCandidatos.setText("Candidatos");
+        btnCandidatos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton1ActionPerformed(evt);
+                btnCandidatosActionPerformed(evt);
             }
         });
 
-        jToggleButton2.setText("GESTIONAR CUENTAS");
-        jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
+        ventana.setBorder(javax.swing.BorderFactory.createTitledBorder("Gestionar"));
+
+        btnPersonas.setText("Personas");
+        btnPersonas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton2ActionPerformed(evt);
+                btnPersonasActionPerformed(evt);
             }
         });
 
-        jButton1.setText("GESTIONAR DIGNIDADES");
+        jButton1.setText("Cuentas");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jToggleButton3.setText("GESTIONAR PARTIDO POLITICO");
-        jToggleButton3.addActionListener(new java.awt.event.ActionListener() {
+        jButton2.setText("Dignidad");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton3ActionPerformed(evt);
+                jButton2ActionPerformed(evt);
             }
         });
 
-        jToggleButton4.setText("GESTIONAR PERSONAS");
-        jToggleButton4.addActionListener(new java.awt.event.ActionListener() {
+        jButton3.setText("Elección");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton4ActionPerformed(evt);
+                jButton3ActionPerformed(evt);
             }
         });
 
-        jToggleButton5.setText("GESTIONAR ROLES");
-        jToggleButton5.addActionListener(new java.awt.event.ActionListener() {
+        jButton4.setText("Rol");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton5ActionPerformed(evt);
+                jButton4ActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(160, 160, 160)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jToggleButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
-                    .addComponent(jToggleButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToggleButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToggleButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(204, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jToggleButton1)
-                .addGap(35, 35, 35)
-                .addComponent(jToggleButton2)
-                .addGap(50, 50, 50)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
-                .addComponent(jToggleButton3)
-                .addGap(44, 44, 44)
-                .addComponent(jToggleButton4)
-                .addGap(52, 52, 52)
-                .addComponent(jToggleButton5)
-                .addGap(53, 53, 53))
-        );
+        jButton5.setText("Partido Político");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        btnHistorial.setText("Historial");
+        btnHistorial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHistorialActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -128,40 +122,120 @@ public class FrmGestionar extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnCandidatos)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnPersonas)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton3)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton4)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton5)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnHistorial)
+                        .addGap(0, 504, Short.MAX_VALUE))
+                    .addComponent(ventana, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCandidatos)
+                    .addComponent(btnPersonas)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3)
+                    .addComponent(jButton4)
+                    .addComponent(jButton5)
+                    .addComponent(btnHistorial))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ventana, javax.swing.GroupLayout.DEFAULT_SIZE, 712, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        new FrmCandidato(null, true).setVisible(true);
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
+    private void btnCandidatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCandidatosActionPerformed
+        Frmcandidato v = new Frmcandidato();
+        if (vp1.equalsIgnoreCase("0")) {
+            
+            ventana.addTab("Gestionar candidato", v);
+            ventana.setSelectedComponent(v);
+        } 
+        vp1 = "1";  
+    }//GEN-LAST:event_btnCandidatosActionPerformed
 
-    private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
-        new FrmCuenta(null, true).setVisible(true);
-    }//GEN-LAST:event_jToggleButton2ActionPerformed
+    private void btnPersonasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPersonasActionPerformed
+        Frmpersona v = new Frmpersona();
+        if (vp2.equalsIgnoreCase("0")) {
+            ventana.addTab("Gestionar personas", v);
+            ventana.setSelectedComponent(v);
+        } 
+        vp2 = "1"; 
+    }//GEN-LAST:event_btnPersonasActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new FrmDignidad(null, true).setVisible(true);
+        Frmcuenta v = new Frmcuenta();
+        if (vp3.equalsIgnoreCase("0")) {
+            ventana.addTab("Gestionar cuentas", v);
+            ventana.setSelectedComponent(v);
+        } 
+        vp3 = "1"; 
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton3ActionPerformed
-        new FrmPartidoPolitico(null, true).setVisible(true);
-    }//GEN-LAST:event_jToggleButton3ActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        Frmdignidad v = new Frmdignidad();
+        if (vp4.equalsIgnoreCase("0")) {
+            ventana.addTab("Gestionar dignidades", v);
+            ventana.setSelectedComponent(v);
+        } 
+        vp4 = "1"; 
+    }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jToggleButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton4ActionPerformed
-        new FrmPersona(null, true).setVisible(true);
-    }//GEN-LAST:event_jToggleButton4ActionPerformed
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        Frmeleccion v = new Frmeleccion();
+        if (vp5.equalsIgnoreCase("0")) {
+            ventana.addTab("Gestionar elecciones", v);
+            ventana.setSelectedComponent(v);
+        } 
+        vp5 = "1"; 
+    }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jToggleButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton5ActionPerformed
-        new FrmRol(null, true).setVisible(true);
-    }//GEN-LAST:event_jToggleButton5ActionPerformed
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        Frmrol v = new Frmrol();
+        if (vp6.equalsIgnoreCase("0")) {
+            ventana.addTab("Gestionar roles", v);
+            ventana.setSelectedComponent(v);
+        } 
+        vp6 = "1"; 
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        FrmpartidoPolitico v = new FrmpartidoPolitico();
+        if (vp7.equalsIgnoreCase("0")) {
+            ventana.addTab("Gestionar partidos políticos", v);
+            ventana.setSelectedComponent(v);
+        } 
+        vp7 = "1"; 
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void btnHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialActionPerformed
+        Frmhistorial v = new Frmhistorial();
+        if (vp8.equalsIgnoreCase("0")) {
+            ventana.addTab("Revisar Historial", v);
+            ventana.setSelectedComponent(v);
+        } 
+        vp8 = "1"; 
+    }//GEN-LAST:event_btnHistorialActionPerformed
 
     /**
      * @param args the command line arguments
@@ -189,6 +263,7 @@ public class FrmGestionar extends javax.swing.JDialog {
             java.util.logging.Logger.getLogger(FrmGestionar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -206,13 +281,15 @@ public class FrmGestionar extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton btnCandidatos;
+    private javax.swing.JButton btnHistorial;
+    private javax.swing.JButton btnPersonas;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JToggleButton jToggleButton1;
-    private javax.swing.JToggleButton jToggleButton2;
-    private javax.swing.JToggleButton jToggleButton3;
-    private javax.swing.JToggleButton jToggleButton4;
-    private javax.swing.JToggleButton jToggleButton5;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JTabbedPane ventana;
     // End of variables declaration//GEN-END:variables
 }

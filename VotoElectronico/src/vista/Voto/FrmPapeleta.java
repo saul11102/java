@@ -4,18 +4,52 @@
  */
 package vista.Voto;
 
+import Controlador.DAO.CandidatoDao;
+import Controlador.DAO.DignidadDao;
+import Controlador.DAO.PapeletaDao;
+import Controlador.DAO.PersonaDAO;
+import Controlador.DAO.VotoDAO;
+import Controlador.ed.lista.Exception.PosicionException;
+import Controlador.ed.lista.Exception.VacioException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import modelo.Persona;
+import vista.Utilidades.PapeletaComponent;
+
 /**
  *
  * @author santiago
  */
 public class FrmPapeleta extends javax.swing.JDialog {
 
+    private PapeletaComponent pc = new PapeletaComponent();
+    private DignidadDao dd = new DignidadDao();
+    private CandidatoDao cd = new CandidatoDao();
+    private VotoDAO vd = new VotoDAO();
+    private Persona persona = new Persona();
+    private PersonaDAO pd = new PersonaDAO();
+    private PapeletaDao ppd = new PapeletaDao();
+
     /**
      * Creates new form FrmPapeleta
      */
-    public FrmPapeleta(java.awt.Frame parent, boolean modal) {
+    public FrmPapeleta(java.awt.Frame parent, boolean modal, Persona aux) {
         super(parent, modal);
         initComponents();
+        this.persona = aux;
+        addTabs();
+    }
+
+    private void addTabs() {
+        try {
+            pc.construirPapeleta(tabbed, dd, cd);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmPapeleta.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -27,20 +61,28 @@ public class FrmPapeleta extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        menuBar1 = new java.awt.MenuBar();
+        menu1 = new java.awt.Menu();
+        menu2 = new java.awt.Menu();
+        tabbed = new javax.swing.JTabbedPane();
+        btnTerminar = new javax.swing.JButton();
+
+        menu1.setLabel("File");
+        menuBar1.add(menu1);
+
+        menu2.setLabel("Edit");
+        menuBar1.add(menu2);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 666, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 411, Short.MAX_VALUE)
-        );
+        tabbed.setBorder(javax.swing.BorderFactory.createTitledBorder("Papeleta"));
+
+        btnTerminar.setText("TERMINAR");
+        btnTerminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTerminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -48,19 +90,52 @@ public class FrmPapeleta extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tabbed, javax.swing.GroupLayout.DEFAULT_SIZE, 1383, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(452, 452, 452)
+                .addComponent(btnTerminar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(tabbed, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addComponent(btnTerminar)
+                .addGap(25, 25, 25))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnTerminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTerminarActionPerformed
+        HashMap<Integer, String> mapa = pc.getMapa();
+        try {
+            vd.votar(vd.listaVotoGuardar(mapa));
+            
+            persona.setEstado(1);
+            pd.setPersona(persona);
+            pd.modificar(persona.getId());
+
+            Date fechaActual = new Date();
+            SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String fechaFormateada = formatoFecha.format(fechaActual);
+
+            ppd.getPapeleta().setFechaEmision(fechaFormateada);
+            
+            ppd.guardar(persona.getId());
+            
+
+            this.setModal(false);
+            this.dispose();
+
+            JOptionPane.showMessageDialog(null, "Voto Guardado", "OK", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }//GEN-LAST:event_btnTerminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -88,11 +163,12 @@ public class FrmPapeleta extends javax.swing.JDialog {
             java.util.logging.Logger.getLogger(FrmPapeleta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FrmPapeleta dialog = new FrmPapeleta(new javax.swing.JFrame(), true);
+                FrmPapeleta dialog = new FrmPapeleta(new javax.swing.JFrame(), true, null);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -105,6 +181,10 @@ public class FrmPapeleta extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton btnTerminar;
+    private java.awt.Menu menu1;
+    private java.awt.Menu menu2;
+    private java.awt.MenuBar menuBar1;
+    private javax.swing.JTabbedPane tabbed;
     // End of variables declaration//GEN-END:variables
 }

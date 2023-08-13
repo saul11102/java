@@ -4,6 +4,8 @@
  */
 package Controlador.DAO;
 
+import Controlador.ed.lista.Exception.PosicionException;
+import Controlador.ed.lista.Exception.VacioException;
 import Controlador.ed.lista.ListaEnlazada;
 import java.io.IOException;
 import modelo.Candidato;
@@ -12,7 +14,7 @@ import modelo.Candidato;
  *
  * @author alejandro
  */
-public class CandidatoDao extends AdaptadorDAO<Candidato> {
+public class CandidatoDao extends AdaptadorDAOBDD<Candidato> {
 
     private Candidato candidato;
 
@@ -31,19 +33,28 @@ public class CandidatoDao extends AdaptadorDAO<Candidato> {
         this.candidato = candidato;
     }
 
-    public void guardar() throws IOException {
-        candidato.setId(generarId());
+    public void guardar() throws IOException, Exception {
         this.guardar(candidato);
     }
 
     public void modificar(Integer pos) throws Exception {
-        this.modificar(candidato, pos);
+        if (candidato == null || candidato.getId() == null) {
+            throw new IllegalArgumentException("El partido político no está correctamente configurado para la modificación.");
+        }
+
+        ListaEnlazada<Candidato> lista = listar();
+
+        if (pos < 0 || pos >= lista.size()) {
+            throw new IndexOutOfBoundsException("Posición inválida: " + pos);
+        }
+
+        Candidato aux = lista.get(pos);
+        
+        
+
+        this.modificar(aux);
     }
 
-    private Integer generateID() {
-        return listar().size() + 1;
-    }
-    
     public Candidato buscarPorId(Integer dato) throws Exception {
         Candidato resultado = null;
         ListaEnlazada<Candidato> lista = listar();
@@ -55,5 +66,29 @@ public class CandidatoDao extends AdaptadorDAO<Candidato> {
             }
         }
         return resultado;
+    }
+
+    public ListaEnlazada<Candidato> buscarPorDignidad(Integer id_dignidad) throws VacioException, PosicionException {
+        ListaEnlazada<Candidato> lista = new ListaEnlazada<>();
+        ListaEnlazada<Candidato> listado = listar();
+        for (int i = 0; i < listado.size(); i++) {
+            Candidato aux = listado.get(i);
+            if (aux.getId_Dignidad().intValue() == id_dignidad.intValue()) {
+                lista.insertarNodo(aux);
+            }
+        }
+        return lista;
+    }
+
+    public ListaEnlazada<Candidato> buscarPorDignidadPartido(Integer id_Dignidad, Integer id_partidoPolitico) throws VacioException, PosicionException {
+        ListaEnlazada<Candidato> lista = new ListaEnlazada<>();
+        ListaEnlazada<Candidato> listado = listar();
+        for (int i = 0; i < listado.size(); i++) {
+            Candidato aux = listado.get(i);
+            if (aux.getId_Dignidad().intValue() == id_Dignidad.intValue() && aux.getId_PartidoPolitico().intValue() == id_partidoPolitico.intValue()) {
+                lista.insertarNodo(aux);
+            }
+        }
+        return lista;
     }
 }

@@ -1,8 +1,10 @@
-/*
+    /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package modelo;
+
+import java.util.Date;
 
 /**
  *
@@ -13,12 +15,12 @@ public class Eleccion {
     private String nombre;
     private String ubicacion;
     private String fecha;
-    private Boolean estado;
+    private Integer estado;
 
     public Eleccion() {
     }
 
-    public Eleccion(Integer id, String nombre, String ubicacion, String fecha, Boolean estado) {
+    public Eleccion(Integer id, String nombre, String ubicacion, String fecha, Integer estado) {
         this.id = id;
         this.nombre = nombre;
         this.ubicacion = ubicacion;
@@ -58,12 +60,13 @@ public class Eleccion {
         this.fecha = fecha;
     }
 
-    public Boolean getEstado() {
+    public Integer getEstado() {
         return estado;
     }
 
-    public void setEstado(Boolean estado) {
+    public void setEstado(Integer estado) {
         this.estado = estado;
     }
+
     
 }

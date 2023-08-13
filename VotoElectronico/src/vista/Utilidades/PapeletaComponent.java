@@ -50,7 +50,7 @@ public class PapeletaComponent {
         ListaEnlazada<Dignidad> lista = dd.listar();
         for (int i = 0; i < lista.size(); i++) {
             Dignidad d = lista.get(i);
-            if (d.getEstado()) {
+            if (d.getEstado() == 1) {
                 ListaEnlazada<PartidoPolitico> listaP = new PartidoPoliticoDao().listaPartidosDignidad(d.getId());
                 ///////////
                 //ListaEnlazada<Candidato> listaC = cd.buscarPorDignidad(d.getId());
@@ -89,7 +89,7 @@ public class PapeletaComponent {
                         panelPrincipal.add(scrollP);
                     }
                     tabbed.addTab(d.getNombre(), panelPrincipal);
-
+                    
                 }
             }
         }
@@ -108,7 +108,7 @@ public class PapeletaComponent {
         c.gridwidth = 3;
         c.gridx = 0;
         c.gridy = 0;
-
+        
         JLabel lblFoto = new JLabel();
         lblFoto.setIcon(scaleImage(new ImageIcon(getClass().getResource("/vista/Voto/FotoCandidatos/" + candidato.getFoto())), 200, 150));
         lblFoto.setSize(new Dimension(200, 150));
@@ -116,27 +116,27 @@ public class PapeletaComponent {
         panel.add(lblFoto, c);
         c.gridx = 1;
         c.gridy = 1;
-
+        
         JLabel lblNombre = new JLabel(new PersonaDAO().obtener(candidato.getId_Persona()).toString());
         panel.add(lblNombre, c);
         c.gridx = 1;
         c.gridy = 2;
-
+        
         JCheckBox chck = new JCheckBox("VOTAR");
-        chck.addActionListener(new ActionListener() {
+        chck.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent ae) {
                 JCheckBox aux = (JCheckBox) ae.getSource();
                 String valor = mapa.get(candidato.getId_Dignidad()).toString();
-                String voto = "candidato" + ":" + candidato.getId() + "," + "dignidad" + ":" + candidato.getId_Dignidad() + "," + "partido" + ":" + candidato.getId_PartidoPolitico();
+                String voto = "candidato"+":"+candidato.getId()+","+"dignidad"+":"+candidato.getId_Dignidad()+","+"partido"+":"+candidato.getId_PartidoPolitico();
                 if (aux.isSelected()) {
                     if (valor.isEmpty()) {
                         valor = voto;
                     } else {
-                        valor += ";" + voto;
+                        valor+=";"+voto;
                     }
                     mapa.put(candidato.getId_Dignidad(), valor);
-
+                    
                 } else {
                     String[] trozar = valor.split(";");
                     if (trozar.length == 1) {
@@ -145,35 +145,36 @@ public class PapeletaComponent {
                         valor = "";
                         for (String vot : trozar) {
                             if (!vot.equalsIgnoreCase(voto)) {
-                                valor += vot + ";";
+                                valor += vot +";";
                             }
                         }
-                        valor = valor.substring(0, valor.length() - 1);
+                        valor = valor.substring(0, valor.length()-1);
                     }
                     mapa.put(candidato.getId_Dignidad(), valor);
-
+                    
                 }
-            }
-
+            } 
+            
         });
         panel.add(chck, c);
         return panel;
-
+        
     }
-
-    public ImageIcon scaleImage(ImageIcon icon, int w, int h) {
-        int nw = icon.getIconWidth();
+    
+    public ImageIcon scaleImage(ImageIcon icon, int w, int h){
+        int nw = icon.getIconWidth(); 
         int nh = icon.getIconHeight();
-
+        
         if (icon.getIconWidth() > w) {
             nw = w;
-            nh = (nw * icon.getIconHeight()) / icon.getIconWidth();
+             nh = (nw * icon.getIconHeight()) / icon.getIconWidth();
         }
-
+        
         if (nh > h) {
             nh = h;
-            nw = (icon.getIconWidth() * nh) / icon.getIconHeight();
+            nw = (icon.getIconWidth() * nh ) / icon.getIconHeight();
         }
         return new ImageIcon(icon.getImage().getScaledInstance(nw, nh, Image.SCALE_DEFAULT));
     }
+    
 }

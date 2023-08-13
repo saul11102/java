@@ -4,12 +4,13 @@
  */
 package modelo;
 
+import Controlador.DAO.PersonaDAO;
+
 /**
  *
  * @author alejandro
  */
 public class Candidato {
-
     private Integer id;
     private String foto;
     private Integer id_Persona;
@@ -66,5 +67,5 @@ public class Candidato {
     public void setId_Dignidad(Integer id_Dignidad) {
         this.id_Dignidad = id_Dignidad;
     }
-
+   
 }
