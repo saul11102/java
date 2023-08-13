@@ -14,13 +14,13 @@ import java.util.Date;
 public class Historial {
 
     private Integer id;
-    private Date fecha;
+    private String fecha;
     private Integer id_Cuenta;
 
     public Historial() {
     }
 
-    public Historial(Integer id, Date fecha, Integer id_Cuenta) {
+    public Historial(Integer id, String fecha, Integer id_Cuenta) {
         this.id = id;
         this.fecha = fecha;
         this.id_Cuenta = id_Cuenta;
@@ -34,11 +34,11 @@ public class Historial {
         this.id = id;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 
@@ -50,4 +50,5 @@ public class Historial {
         this.id_Cuenta = id_Cuenta;
     }
 
+    
 }

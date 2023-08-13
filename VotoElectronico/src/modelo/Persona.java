@@ -16,13 +16,13 @@ public class Persona {
     private String direccion;
     private String correoElectronico;
     private String numeroTelefono;
-    private Boolean estado;
+    private Integer estado;
     private Integer id_Rol;
 
     public Persona() {
     }
 
-    public Persona(Integer id, String cedula, String nombre, String apellido, String direccion, String correoElectronico, String numeroTelefono, Boolean estado, Integer id_Rol) {
+    public Persona(Integer id, String cedula, String nombre, String apellido, String direccion, String correoElectronico, String numeroTelefono, Integer estado, Integer id_Rol) {
         this.id = id;
         this.cedula = cedula;
         this.nombre = nombre;
@@ -90,11 +90,11 @@ public class Persona {
         this.numeroTelefono = numeroTelefono;
     }
 
-    public Boolean getEstado() {
+    public Integer getEstado() {
         return estado;
     }
 
-    public void setEstado(Boolean estado) {
+    public void setEstado(Integer estado) {
         this.estado = estado;
     }
 
@@ -108,7 +108,7 @@ public class Persona {
 
     @Override
     public String toString() {
-        return apellido+ " "+nombre;
+        return nombre+" "+apellido;
     }
 
     
