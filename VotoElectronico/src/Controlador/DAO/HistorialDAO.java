@@ -31,31 +31,28 @@ public class HistorialDAO extends AdaptadorDAOBDD<Historial> {
     public void setHistorial(Historial historial) {
         this.historial = historial;
     }
+
     /**
      * guarda un historial dentro de la base
      * @throws IOException
      * @throws Exception 
      */
-
     public void guardar() throws IOException, Exception {
         this.guardar(historial);
     }
+
     /**
      * modifica un historial dentro de la base
      * @param pos
      * @throws Exception 
      */
-
     public void modificar(Integer pos) throws Exception {
         if (historial == null || historial.getId() == null) {
-            throw new IllegalArgumentException("El partido político no está correctamente configurado para la modificación.");
+            throw new IllegalArgumentException("El historial no está correctamente configurado para la modificación.");
         }
 
         ListaEnlazada<Historial> lista = listar();
 
-        if (pos < 0 || pos >= lista.size()) {
-            throw new IndexOutOfBoundsException("Posición inválida: " + pos);
-        }
 
         Historial aux = lista.get(pos);
         
@@ -63,7 +60,4 @@ public class HistorialDAO extends AdaptadorDAOBDD<Historial> {
         this.modificar(aux);
     }
 
-    private Integer generateID() {
-        return listar().size() + 1;
-    }
 }

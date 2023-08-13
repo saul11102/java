@@ -51,11 +51,15 @@ public class FrmPersona extends javax.swing.JInternalFrame {
         cargarCombo();
     }
 
+    /**
+     * carga los combos obteniendo la información desde la base de datos
+     */
     private void cargarCombo() {
         try {
             CargarCombo.cargarRol(cbxRol, rd);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No existen roles asignados");
+            System.out.println(e.getMessage());
         }
     }
 
