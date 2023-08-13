@@ -5,13 +5,13 @@
 package vista.Voto;
 
 import vista.Frmcandidato;
-import vista.Frmcuenta;
+import vista.FrmCuenta;
 import vista.Frmdignidad;
 import vista.Frmeleccion;
-import vista.Frmhistorial;
+import vista.FrmHistorial;
 import vista.FrmpartidoPolitico;
-import vista.Frmpersona;
-import vista.Frmrol;
+import vista.FrmPersona;
+import vista.FrmRol;
 
 /**
  *
@@ -175,7 +175,7 @@ public class FrmGestionar extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCandidatosActionPerformed
 
     private void btnPersonasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPersonasActionPerformed
-        Frmpersona v = new Frmpersona();
+        FrmPersona v = new FrmPersona();
         if (vp2.equalsIgnoreCase("0")) {
             ventana.addTab("Gestionar personas", v);
             ventana.setSelectedComponent(v);
@@ -184,7 +184,7 @@ public class FrmGestionar extends javax.swing.JDialog {
     }//GEN-LAST:event_btnPersonasActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Frmcuenta v = new Frmcuenta();
+        FrmCuenta v = new FrmCuenta();
         if (vp3.equalsIgnoreCase("0")) {
             ventana.addTab("Gestionar cuentas", v);
             ventana.setSelectedComponent(v);
@@ -211,7 +211,7 @@ public class FrmGestionar extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        Frmrol v = new Frmrol();
+        FrmRol v = new FrmRol();
         if (vp6.equalsIgnoreCase("0")) {
             ventana.addTab("Gestionar roles", v);
             ventana.setSelectedComponent(v);
@@ -229,7 +229,7 @@ public class FrmGestionar extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void btnHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialActionPerformed
-        Frmhistorial v = new Frmhistorial();
+        FrmHistorial v = new FrmHistorial();
         if (vp8.equalsIgnoreCase("0")) {
             ventana.addTab("Revisar Historial", v);
             ventana.setSelectedComponent(v);

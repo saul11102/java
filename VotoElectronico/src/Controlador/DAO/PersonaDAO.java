@@ -4,7 +4,6 @@
  */
 package Controlador.DAO;
 
-import Controlador.DAO.AdaptadorDAOBDD;
 import Controlador.ed.lista.ListaEnlazada;
 import java.io.IOException;
 import modelo.Persona;
@@ -31,25 +30,33 @@ public class PersonaDAO extends AdaptadorDAOBDD<Persona>{
         this.persona = persona;
     }
 
-    public void guardar() throws IOException {
-        persona.setId(generarId());
+    public void guardar() throws IOException, Exception {
         this.guardar(persona);
     }
 
     public void modificar(Integer pos) throws Exception {
-        this.modificar(persona, pos);
+        if (persona == null || persona.getId() == null) {
+            throw new IllegalArgumentException("El partido político no está correctamente configurado para la modificación.");
+        }
+
+        ListaEnlazada<Persona> lista = listar();
+
+
+
+        Persona aux = this.buscarPorId(pos);
+      
+        aux.setEstado(1);
+        
+
+        this.modificar(aux);
     }
 
-    private Integer generateID() {
-        return listar().size() + 1;
-    }
-    
     public Persona buscarPorCedula(String dato) throws Exception {
         Persona resultado = null;
         ListaEnlazada<Persona> lista = listar();
-        for (int i = 0; i <= lista.size(); i++) {
+        for (int i = 0; i < lista.size(); i++) {
             Persona aux = lista.get(i);
-            if (aux.getCedula().toLowerCase().equals(dato.toLowerCase())) {
+            if (aux.getCedula().equalsIgnoreCase(dato)) {
                 resultado = aux;
                 break;
             }

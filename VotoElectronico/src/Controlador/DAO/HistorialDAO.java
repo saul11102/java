@@ -4,6 +4,7 @@
  */
 package Controlador.DAO;
 
+import Controlador.ed.lista.ListaEnlazada;
 import java.io.IOException;
 import modelo.Historial;
 
@@ -11,7 +12,7 @@ import modelo.Historial;
  *
  * @author Juan_fer
  */
-public class HistorialDAO extends AdaptadorDAO<Historial> {
+public class HistorialDAO extends AdaptadorDAOBDD<Historial> {
 
     private Historial historial;
 
@@ -31,13 +32,25 @@ public class HistorialDAO extends AdaptadorDAO<Historial> {
         this.historial = historial;
     }
 
-    public void guardar() throws IOException {
-        historial.setId(generarId());
+    public void guardar() throws IOException, Exception {
         this.guardar(historial);
     }
 
     public void modificar(Integer pos) throws Exception {
-        this.modificar(historial, pos);
+        if (historial == null || historial.getId() == null) {
+            throw new IllegalArgumentException("El partido político no está correctamente configurado para la modificación.");
+        }
+
+        ListaEnlazada<Historial> lista = listar();
+
+        if (pos < 0 || pos >= lista.size()) {
+            throw new IndexOutOfBoundsException("Posición inválida: " + pos);
+        }
+
+        Historial aux = lista.get(pos);
+        
+
+        this.modificar(aux);
     }
 
     private Integer generateID() {

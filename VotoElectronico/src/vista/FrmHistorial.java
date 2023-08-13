@@ -9,7 +9,7 @@ import vista.ModeloTabla.ModeloTablaHistorial;
 
 /**
  *
- * @author Juan_Fer
+ * @author Juan_fer
  */
 public class FrmHistorial extends javax.swing.JInternalFrame {
 
