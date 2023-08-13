@@ -45,14 +45,11 @@ public class TipoVotoDao extends AdaptadorDAOBDD<TipoVoto>{
      */
     public void modificar(Integer pos) throws Exception {
         if (tipoVoto == null || tipoVoto.getId() == null) {
-            throw new IllegalArgumentException("El partido político no está correctamente configurado para la modificación.");
+            throw new IllegalArgumentException("El tipo de voto no está correctamente configurado para la modificación.");
         }
 
         ListaEnlazada<TipoVoto> lista = listar();
 
-        if (pos < 0 || pos >= lista.size()) {
-            throw new IndexOutOfBoundsException("Posición inválida: " + pos);
-        }
 
         TipoVoto aux = lista.get(pos);
         

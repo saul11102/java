@@ -53,15 +53,12 @@ public class FrmRol extends javax.swing.JInternalFrame {
         if (txtDescripcion.getText().isEmpty() || txtNombre.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Ingrese todos los campos");
         } else {
-            try {
-                rd.getRol().setNombre(txtNombre.getText().toString());
-                rd.getRol().setDescripcion(txtDescripcion.getText().toString());
-                rd.guardar();
-                JOptionPane.showMessageDialog(null, "Guardado correctamente");
-                limpiar();
-            } catch (IOException ex) {
-                Logger.getLogger(FrmRol.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            rd.getRol().setNombre(txtNombre.getText().toString());
+            rd.getRol().setDescripcion(txtDescripcion.getText().toString());
+            rd.guardar();
+            JOptionPane.showMessageDialog(null, "Guardado correctamente");
+            limpiar();
+
         }
     }
     /**
@@ -194,7 +191,8 @@ public class FrmRol extends javax.swing.JInternalFrame {
         try {
             guardar();
         } catch (Exception ex) {
-            Logger.getLogger(FrmRol.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "No se pudo guardar");
+            System.out.println(ex.getMessage());
         }
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 

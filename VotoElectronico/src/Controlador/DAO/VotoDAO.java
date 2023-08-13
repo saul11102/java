@@ -56,24 +56,16 @@ public class VotoDAO extends AdaptadorDAOBDD<Voto> {
      */
     public void modificar(Integer pos) throws Exception {
         if (voto == null || voto.getId() == null) {
-            throw new IllegalArgumentException("El partido político no está correctamente configurado para la modificación.");
+            throw new IllegalArgumentException("El voto no está correctamente configurado para la modificación.");
         }
 
         ListaEnlazada<Voto> lista = listar();
 
-        if (pos < 0 || pos >= lista.size()) {
-            throw new IndexOutOfBoundsException("Posición inválida: " + pos);
-        }
 
         Voto aux = lista.get(pos);
         
 
         this.modificar(aux);
-    }
-
-
-    private Integer generateID() {
-        return listar().size() + 1;
     }
     
     /**

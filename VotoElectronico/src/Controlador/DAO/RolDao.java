@@ -47,14 +47,10 @@ public class RolDao extends AdaptadorDAOBDD<Rol> {
      */
     public void modificar(Integer pos) throws Exception {
         if (rol == null || rol.getId() == null) {
-            throw new IllegalArgumentException("El partido político no está correctamente configurado para la modificación.");
+            throw new IllegalArgumentException("El rol no está correctamente configurado para la modificación.");
         }
 
         ListaEnlazada<Rol> lista = listar();
-
-        if (pos < 0 || pos >= lista.size()) {
-            throw new IndexOutOfBoundsException("Posición inválida: " + pos);
-        }
 
         Rol aux = lista.get(pos);
 
