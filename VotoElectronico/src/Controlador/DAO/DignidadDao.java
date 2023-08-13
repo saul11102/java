@@ -12,7 +12,7 @@ import modelo.Dignidad;
  *
  * @author Kevin
  */
-public class DignidadDao extends AdaptadorDAO<Dignidad> {
+public class DignidadDao extends AdaptadorDAOBDD<Dignidad> {
 
     private Dignidad dignidad;
 
@@ -31,13 +31,25 @@ public class DignidadDao extends AdaptadorDAO<Dignidad> {
         this.dignidad = dignidad;
     }
 
-    public void guardar() throws IOException {
-        dignidad.setId(generarId());
+    public void guardar() throws IOException, Exception {
         this.guardar(dignidad);
     }
 
     public void modificar(Integer pos) throws Exception {
-        this.modificar(dignidad, pos);
+        if (dignidad == null || dignidad.getId() == null) {
+            throw new IllegalArgumentException("El partido político no está correctamente configurado para la modificación.");
+        }
+
+        ListaEnlazada<Dignidad> lista = listar();
+
+        if (pos < 0 || pos >= lista.size()) {
+            throw new IndexOutOfBoundsException("Posición inválida: " + pos);
+        }
+
+        Dignidad aux = lista.get(pos);
+        
+
+        this.modificar(aux);
     }
 
     private Integer generateID() {
@@ -57,5 +69,3 @@ public class DignidadDao extends AdaptadorDAO<Dignidad> {
         return resultado;
     }
 }
-
-

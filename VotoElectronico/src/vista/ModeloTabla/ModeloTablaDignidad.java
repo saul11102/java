@@ -12,10 +12,11 @@ import modelo.Dignidad;
  *
  * @author Kevin
  */
-public class ModeloTablaDignidad extends AbstractTableModel{
+public class ModeloTablaDignidad extends AbstractTableModel {
+
     private ListaEnlazada<Dignidad> lista = new ListaEnlazada<>();
-    
-   public ListaEnlazada<Dignidad> getLista() {
+
+    public ListaEnlazada<Dignidad> getLista() {
         return lista;
     }
 
@@ -23,8 +24,6 @@ public class ModeloTablaDignidad extends AbstractTableModel{
         this.lista = lista;
     }
 
-    
-    
     @Override
     public int getRowCount() {
         return lista.size();
@@ -32,7 +31,7 @@ public class ModeloTablaDignidad extends AbstractTableModel{
 
     @Override
     public int getColumnCount() {
-        return 2;
+        return 5;
     }
 
     @Override
@@ -45,9 +44,15 @@ public class ModeloTablaDignidad extends AbstractTableModel{
         }
         switch (i1) {
             case 0:
-                return (d != null) ? d.getNombre() : "No definido";
+                return (d != null) ? d.getId() : "No definido";
             case 1:
-                return (d != null) ? d.getVigencia(): "No definido";
+                return (d != null) ? d.getNro() : "No definido";
+            case 2:
+                return (d != null) ? d.getEstado() : "No definido";
+            case 3:
+                return (d != null) ? d.getNombre() : "No definido";
+            case 4:
+                return (d != null) ? d.getVigencia() : "No definido";
             default:
                 return null;
         }
@@ -58,11 +63,17 @@ public class ModeloTablaDignidad extends AbstractTableModel{
     public String getColumnName(int column) {
         switch (column) {
             case 0:
-                return "Nombre";
+                return "ID";
             case 1:
+                return "Nro";
+            case 2:
+                return "Estado";
+            case 3:
+                return "Nombre";
+            case 4:
                 return "Vigencia";
             default:
                 return null;
         }
-    }   
+    }
 }

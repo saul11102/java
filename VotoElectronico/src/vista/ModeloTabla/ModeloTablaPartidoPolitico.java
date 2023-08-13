@@ -30,7 +30,7 @@ public class ModeloTablaPartidoPolitico extends AbstractTableModel{
 
     @Override
     public int getColumnCount() {
-        return 6;
+        return 8;
     }
 
     @Override
@@ -43,17 +43,21 @@ public class ModeloTablaPartidoPolitico extends AbstractTableModel{
         }
         switch (i1) {
             case 0:
-                return (p != null) ? p.getNombre() : "No definido";
+                return (p != null) ? p.getId() : "No definido";
             case 1:
-                return (p != null) ? p.getSlogan() : "No definido";
+                return (p != null) ? p.getNombre(): "No definido";
             case 2:
-                return (p != null) ? p.getFoto() : "No definido";
+                return (p != null) ? p.getSlogan() : "No definido";
             case 3:
-                return (p != null) ? p.getSiglas() : "No definido";
+                return (p != null) ? p.getFoto() : "No definido";
             case 4:
-                return (p != null) ? p.getLider() : "No definido";
+                return (p != null) ? p.getSiglas() : "No definido";
             case 5:
+                return (p != null) ? p.getLider() : "No definido";
+            case 6:
                 return (p != null) ? p.getSede() : "No definido";
+            case 7:
+                return (p != null) ? p.getNroLista() : "No definido";
             default:
                 return null;
         }
@@ -64,17 +68,21 @@ public class ModeloTablaPartidoPolitico extends AbstractTableModel{
     public String getColumnName(int column) {
         switch (column) {
             case 0:
-                return "Nombre";
+                return "id";
             case 1:
-                return "Slogan";
+                return "Nombre";
             case 2:
-                return "Foto";
+                return "Slogan";
             case 3:
-                return "Siglas";
+                return "Foto";
             case 4:
-                return "Lider";
+                return "Siglas";
             case 5:
+                return "Lider";
+            case 6:
                 return "Sede";
+            case 7:
+                return "Número Lista";
             default:
                 return null;
         }

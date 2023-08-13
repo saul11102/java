@@ -12,8 +12,21 @@ package modelo;
 
 public class Dignidad {
     private Integer id;
+    private Integer nro;
+    public Integer estado;
     private String nombre;
     private String vigencia;
+
+    public Dignidad() {
+    }
+
+    public Dignidad(Integer id, Integer nro, Integer estado, String nombre, String vigencia) {
+        this.id = id;
+        this.nro = nro;
+        this.estado = estado;
+        this.nombre = nombre;
+        this.vigencia = vigencia;
+    }
 
     public Integer getId() {
         return id;
@@ -21,6 +34,22 @@ public class Dignidad {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getNro() {
+        return nro;
+    }
+
+    public void setNro(Integer nro) {
+        this.nro = nro;
+    }
+
+    public Integer getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Integer estado) {
+        this.estado = estado;
     }
 
     public String getNombre() {
@@ -37,5 +66,7 @@ public class Dignidad {
 
     public void setVigencia(String vigencia) {
         this.vigencia = vigencia;
-    }   
+    }
+
+    
 }
