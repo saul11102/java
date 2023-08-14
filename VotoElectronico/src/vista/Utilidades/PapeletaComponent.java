@@ -46,6 +46,14 @@ public class PapeletaComponent {
         this.mapa = mapa;
     }
 
+    /**
+     * construye la papeleta con los partidos políticos, candidatos y dignidades.
+     * @param tabbed
+     * @param dd
+     * @param cd
+     * @throws VacioException
+     * @throws PosicionException 
+     */
     public void construirPapeleta(JTabbedPane tabbed, DignidadDao dd, CandidatoDao cd) throws VacioException, PosicionException {
         ListaEnlazada<Dignidad> lista = dd.listar();
         for (int i = 0; i < lista.size(); i++) {
@@ -95,6 +103,11 @@ public class PapeletaComponent {
         }
     }
 
+    /**
+     * carga los datos de los candidatos
+     * @param candidato
+     * @return 
+     */
     private JPanel candidatos(Candidato candidato) {
         GridBagLayout grid = new GridBagLayout();
         GridBagConstraints c = new GridBagConstraints();

@@ -20,6 +20,12 @@ import modelo.Rol;
  * @author alejandro
  */
 public class CargarCombo {
+    /**
+     * carga el combo del partido político
+     * @param cbx
+     * @param ppd
+     * @throws Exception 
+     */
     public static void cargarPartidoPolitico(JComboBox cbx, PartidoPoliticoDao ppd) throws Exception {
         cbx.removeAllItems();
         ListaEnlazada<PartidoPolitico> lista = ppd.listar();
@@ -28,6 +34,12 @@ public class CargarCombo {
         }
     }
     
+    /**
+     * carga el combo con las dignidades en la base de datos
+     * @param cbx
+     * @param ppd
+     * @throws Exception 
+     */
     public static void cargarDignidad(JComboBox cbx, DignidadDao ppd) throws Exception{
         cbx.removeAllItems();
         ListaEnlazada<Dignidad> lista = ppd.listar();
@@ -36,6 +48,12 @@ public class CargarCombo {
         }
     }
     
+    /**
+     * carga el combo con los roles guardados en la base de datos
+     * @param cbx
+     * @param rd
+     * @throws Exception 
+     */
     public static void cargarRol(JComboBox cbx, RolDao rd) throws Exception{
         cbx.removeAllItems();
         ListaEnlazada<Rol> lista = rd.listar();
@@ -44,6 +62,12 @@ public class CargarCombo {
         }
     }
     
+    /**
+     * carga el combo con las personas
+     * @param cbx
+     * @param rd
+     * @throws Exception 
+     */
     public static void cargarPersona(JComboBox cbx, PersonaDAO rd) throws Exception{
         cbx.removeAllItems();
         ListaEnlazada<Persona> lista = rd.listar();

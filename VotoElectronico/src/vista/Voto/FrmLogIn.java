@@ -119,8 +119,17 @@ public class FrmLogIn extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * 
+     * @param evt 
+     */
     private void btnValidarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnValidarActionPerformed
-        validar();
+        try {
+            validar();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se pudo validar");
+            System.out.println(e.getMessage());
+        }
     }//GEN-LAST:event_btnValidarActionPerformed
 
     /**
