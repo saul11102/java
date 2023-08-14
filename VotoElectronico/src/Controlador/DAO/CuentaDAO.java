@@ -16,12 +16,12 @@ import modelo.Cuenta;
  */
 public class CuentaDAO extends AdaptadorDAOBDD<Cuenta> {
 
-    private Cuenta cuenta; 
-    
+    private Cuenta cuenta;
+
     public CuentaDAO() {
         super(Cuenta.class);
     }
-    
+
     public Cuenta getCuenta() {
         if (this.cuenta == null) {
             this.cuenta = new Cuenta();
@@ -33,38 +33,52 @@ public class CuentaDAO extends AdaptadorDAOBDD<Cuenta> {
         this.cuenta = cuenta;
     }
 
+    /**
+     * guarda a la cuenta dentro de la base
+     *
+     * @throws IOException
+     * @throws Exception
+     */
     public void guardar() throws IOException, Exception {
         this.guardar(cuenta);
     }
 
+    /**
+     * Modifica una cuenta dentro de la base de datos
+     * @param pos
+     * @throws Exception 
+     */
     public void modificar(Integer pos) throws Exception {
-        if(cuenta == null || cuenta.getId() == null){
+        if (cuenta == null || cuenta.getId() == null) {
             throw new IllegalArgumentException("El partido político no está correctamente configurado para la modificación.");
         }
-        
+
         ListaEnlazada<Cuenta> lista = listar();
-        
-        if(pos < 0 || pos >= lista.size()){
+
+        if (pos < 0 || pos >= lista.size()) {
             throw new IndexOutOfBoundsException("Posición inválida: " + pos);
         }
-        
+
         Cuenta aux = lista.get(pos);
         this.modificar(aux);
     }
-
+    
+    /**
+     * genera id único
+     * @return 
+     */
     private Integer generateID() {
         return listar().size() + 1;
     }
-    
+
     /**
-     * 
-     * @param dato
+     * busca una cuenta de acuerdo a su id
+     * @param dato id de la cuenta
      * @return
-     * @throws Exception 
+     * @throws Exception No existe cuenta
      */
-    
-    public Cuenta buscarporId(Integer dato) throws Exception{
-         Cuenta resultado = null;
+    public Cuenta buscarporId(Integer dato) throws Exception {
+        Cuenta resultado = null;
         ListaEnlazada<Cuenta> lista = listar();
         for (int i = 0; i < lista.size(); i++) {
             Cuenta aux = lista.get(i);
