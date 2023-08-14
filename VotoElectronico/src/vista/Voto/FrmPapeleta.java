@@ -11,6 +11,7 @@ import Controlador.DAO.PersonaDAO;
 import Controlador.DAO.VotoDAO;
 import Controlador.ed.lista.Exception.PosicionException;
 import Controlador.ed.lista.Exception.VacioException;
+import Controlador.ed.lista.ListaEnlazada;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;

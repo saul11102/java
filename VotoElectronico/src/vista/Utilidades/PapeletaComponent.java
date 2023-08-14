@@ -55,6 +55,7 @@ public class PapeletaComponent {
      * @throws PosicionException 
      */
     public void construirPapeleta(JTabbedPane tabbed, DignidadDao dd, CandidatoDao cd) throws VacioException, PosicionException {
+        System.out.println("m");
         ListaEnlazada<Dignidad> lista = dd.listar();
         for (int i = 0; i < lista.size(); i++) {
             Dignidad d = lista.get(i);
@@ -170,6 +171,7 @@ public class PapeletaComponent {
             
         });
         panel.add(chck, c);
+        System.out.println("qqqqqqqqqq");
         return panel;
         
     }
