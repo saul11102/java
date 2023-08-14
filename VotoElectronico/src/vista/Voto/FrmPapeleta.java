@@ -47,6 +47,7 @@ public class FrmPapeleta extends javax.swing.JDialog {
 
     private void addTabs() {
         try {
+            System.out.println("cargando5");
             pc.construirPapeleta(tabbed, dd, cd);
         } catch (Exception ex) {
             Logger.getLogger(FrmPapeleta.class.getName()).log(Level.SEVERE, null, ex);

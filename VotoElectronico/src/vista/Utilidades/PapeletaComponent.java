@@ -55,7 +55,6 @@ public class PapeletaComponent {
      * @throws PosicionException 
      */
     public void construirPapeleta(JTabbedPane tabbed, DignidadDao dd, CandidatoDao cd) throws VacioException, PosicionException {
-        System.out.println("m");
         ListaEnlazada<Dignidad> lista = dd.listar();
         for (int i = 0; i < lista.size(); i++) {
             Dignidad d = lista.get(i);
@@ -124,7 +123,10 @@ public class PapeletaComponent {
         c.gridy = 0;
         
         JLabel lblFoto = new JLabel();
-        lblFoto.setIcon(scaleImage(new ImageIcon(getClass().getResource("/vista/Voto/FotoCandidatos/" + candidato.getFoto())), 200, 150));
+        System.out.println("foto");
+        //lblFoto.setIcon(scaleImage(new ImageIcon(getClass().getResource("/vista/Voto/FotoCandidatos/" + candidato.getFoto())), 200, 150));
+        System.out.println("foto2");
+ 
         lblFoto.setSize(new Dimension(200, 150));
         lblFoto.setPreferredSize(new Dimension(200, 150));
         panel.add(lblFoto, c);
@@ -171,7 +173,6 @@ public class PapeletaComponent {
             
         });
         panel.add(chck, c);
-        System.out.println("qqqqqqqqqq");
         return panel;
         
     }
